@@ -1,29 +1,41 @@
-// Theme Toggle
-const themeToggleButton = document.getElementById('theme-toggle-button');
-const body = document.body;
+// Theme Toggle — dark mode by default
+(function () {
+    const body = document.body;
 
-function setTheme(theme) {
-    if (theme === 'light') {
-        body.classList.add('light-mode');
-        themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
-        themeToggleButton.setAttribute('title', 'Switch to dark mode');
-        localStorage.setItem('theme', 'light');
-    } else {
-        body.classList.remove('light-mode');
-        themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
-        themeToggleButton.setAttribute('title', 'Switch to light mode');
-        localStorage.setItem('theme', 'dark');
+    function getIcon(isDark) {
+        return isDark ? 'fas fa-sun' : 'fas fa-moon';
     }
-}
 
-themeToggleButton.addEventListener('click', () => {
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-});
+    function applyTheme(isDark) {
+        if (isDark) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+        const toggle = document.getElementById('darkModeToggle');
+        if (toggle) {
+            toggle.querySelector('i').className = getIcon(isDark);
+            toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+    }
 
-// Initialize theme on page load
-window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-});
+    // Initialise: dark by default, respect saved preference
+    const saved = localStorage.getItem('theme');
+    const prefersDark = saved ? saved === 'dark' : true;
+    applyTheme(prefersDark);
+
+    // Wire up toggle button once DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggle = document.getElementById('darkModeToggle');
+        if (!toggle) return;
+
+        // Re-apply so the icon renders correctly after DOM loads
+        applyTheme(body.classList.contains('dark-mode'));
+
+        toggle.addEventListener('click', function () {
+            const isDark = body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme(isDark);
+        });
+    });
+})();

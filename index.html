@@ -3,271 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jakob Agelin - Data Engineer & Ice Cream Enthusiast</title>
+    <title>Jakob Agelin - Data Engineer</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="#hero">Portfolio</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li>
-                    <button id="theme-toggle-button" class="theme-toggle" title="Toggle light/dark mode">
-                        <i class="fas fa-sun"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<body class="dark-mode">
 
-    <!-- Hero Section -->
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <a href="#hero" class="logo">
+                <img src="assets/media/cv-image.jpeg" alt="Jakob Agelin" class="nav-avatar">
+                Jakob Agelin
+            </a>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#interests">Interests</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
     <section id="hero" class="hero">
         <div class="hero-content">
-            <h1>Hello, I'm <span class="gradient-text">Jakob</span></h1>
-            <p class="subtitle">Data Engineer & Ice Cream Enthusiast</p>
-            <p class="description">Building data pipelines and exploring the physics of frozen desserts in Mölnlycke, Sweden.</p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">View Projects</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            <h1>Hello, I'm <span class="intro-name">Jakob</span></h1>
+            <h2>Data Engineer</h2>
+            <p>Designing and building data platforms for clients across Sweden. Based in Mölnlycke.</p>
+            <div class="cta-buttons">
+                <a href="#experience" class="apple-button apple-button-primary">View Experience</a>
+                <a href="#contact" class="apple-button apple-button-secondary">Get In Touch</a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- About -->
+    <section id="about" class="about section fade-in">
         <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a data engineer passionate about building scalable data systems and exploring the intersection of food science and engineering. My expertise spans ETL pipelines, data warehousing, and process optimization.</p>
-                    <p>Currently based in Mölnlycke, Sweden, I combine my technical skills with a unique interest in the scientific aspects of ice cream production and formulation.</p>
-                </div>
-                <div class="skills">
-                    <h3>Skills & Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Data Pipelines</span>
-                        <span class="skill-tag">ETL</span>
-                        <span class="skill-tag">Cloud Platforms</span>
-                        <span class="skill-tag">Data Analysis</span>
-                        <span class="skill-tag">Statistics</span>
-                        <span class="skill-tag">Git</span>
-                    </div>
-                </div>
+            <div class="section-title">
+                <h2>About Me</h2>
+                <p>Enthusiastic Data engineer, with a growing focus on the technical depth of this ever expanding field.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            
-            <!-- Data Engineering -->
-            <div class="project-category">
-                <h3>Data Engineering</h3>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">📊</div>
-                        </div>
-                        <div class="project-content">
-                            <h4>ETL Pipeline Architecture</h4>
-                            <p>Designed and implemented a scalable ETL pipeline for processing large-scale datasets. Features automated data validation, error handling, and real-time monitoring.</p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">ETL</span>
-                                <span class="tag">Data Engineering</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">GitHub</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">🗄️</div>
-                        </div>
-                        <div class="project-content">
-                            <h4>Data Warehouse Optimization</h4>
-                            <p>Optimized existing data warehouse infrastructure, reducing query times by 45% and improving data freshness. Implemented partitioning and indexing strategies.</p>
-                            <div class="project-tags">
-                                <span class="tag">SQL</span>
-                                <span class="tag">Optimization</span>
-                                <span class="tag">Data Warehouse</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">GitHub</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">📈</div>
-                        </div>
-                        <div class="project-content">
-                            <h4>Analytics Dashboard</h4>
-                            <p>Built interactive real-time analytics dashboard for monitoring business metrics. Integrated with multiple data sources and automated reporting.</p>
-                            <div class="project-tags">
-                                <span class="tag">Analytics</span>
-                                <span class="tag">Dashboard</span>
-                                <span class="tag">Visualization</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">GitHub</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="assets/media/cv-image.jpeg" alt="Jakob Agelin" loading="lazy">
                 </div>
-            </div>
-
-            <!-- Research & Development -->
-            <div class="project-category">
-                <h3>Research & Development</h3>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">🍦</div>
+                <div class="about-content">
+                    <h3 class="about-headline">I'm in love with the domain of data.</h3>
+                    <p class="about-text">Whether the end goal is BI, ML, AI, or an export to Excel — data will be extracted, transformations will be made purposefully, stakeholder expectations will be managed, and business domains will be understood and modelled. That's where I operate: as the data engineer.</p>
+                    <p class="about-text">My current expertise sits on the analytics end of the stack: the pipelines, the data modelling, dbt, PySpark, and SQL transformations. I'm steadily moving deeper into the technical side — containerisation, Spark optimisations, and the software engineering concepts that sit alongside data engineering.</p>
+                    <p class="about-text">I follow the data ecosystem through blogs, podcasts, and <a href="https://reddit.com/r/dataengineering" target="_blank">/r/dataengineering</a>. I'm genuinely curious whether DuckDB and affordable single-machine compute will reshape how we think about distributed analytical workloads.</p>
+                    <p class="about-text">Outside the stack, I'm a people person. I learn best in conversation — talking through a problem, hearing how someone else would approach it, or just listening to a colleague who knows more than I do. At Consid, I've organised knowledge-sharing sessions on my own time, not because I had to, but because I genuinely enjoy it. If you work with me, you get someone who shows up curious, cares about the work being understood rather than just delivered, and gets energised by being around people worth learning from.</p>
+                    <div class="skills-container">
+                        <h4 class="skills-title">Skills & Technologies <span class="skills-title-note">(what I work or have worked with)</span></h4>
+                        <div class="skill-pills">
+                            <span class="skill-pill">Python</span>
+                            <span class="skill-pill">Azure</span>
+                            <span class="skill-pill">SQL</span>
+                            <span class="skill-pill">dbt</span>
+                            <span class="skill-pill">PySpark</span>
+                            <span class="skill-pill">Azure Data Factory</span>
+                            <span class="skill-pill">Databricks</span>
+                            <span class="skill-pill">Power BI</span>
+                            <span class="skill-pill">SSIS</span>
+                            <span class="skill-pill">Git & DevOps</span>
+                            <span class="skill-pill">Data Modelling</span>
+                            <span class="skill-pill">ETL / ELT</span>
+                            <span class="skill-pill">Medallion Architecture</span>
                         </div>
-                        <div class="project-content">
-                            <h4>Ice Cream Formulation Analysis</h4>
-                            <p>Research project analyzing the physical and chemical properties of ice cream formulations. Studied crystallization patterns, texture optimization, and stability.</p>
-                            <div class="project-tags">
-                                <span class="tag">Food Science</span>
-                                <span class="tag">Research</span>
-                                <span class="tag">Analysis</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">Paper</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">🔬</div>
-                        </div>
-                        <div class="project-content">
-                            <h4>Process Optimization Study</h4>
-                            <p>Conducted comprehensive analysis of production processes to identify efficiency improvements. Documented findings and recommended optimizations.</p>
-                            <div class="project-tags">
-                                <span class="tag">Process Optimization</span>
-                                <span class="tag">Research</span>
-                                <span class="tag">Data Analysis</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">Report</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
+                    <div class="radar-container">
+                        <h4 class="skills-title">On the Radar <span class="skills-title-note">(what I'm following and want to dig into)</span></h4>
+                        <div class="radar-pills">
+                            <span class="radar-pill">Apache Airflow</span>
+                            <span class="radar-pill">Dagster</span>
+                            <span class="radar-pill">Prefect</span>
+                            <span class="radar-pill">Apache Kafka</span>
+                            <span class="radar-pill">Apache Iceberg</span>
+                            <span class="radar-pill">Docker & Kubernetes</span>
+                            <span class="radar-pill">Terraform</span>
+                            <span class="radar-pill">Snowflake</span>
+                            <span class="radar-pill">Microsoft Fabric</span>
+                            <span class="radar-pill">GCP / BigQuery</span>
+                            <span class="radar-pill">Polars</span>
+                            <span class="radar-pill">dlt</span>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Other Projects -->
-            <div class="project-category">
-                <h3>Other Projects</h3>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">💻</div>
-                        </div>
-                        <div class="project-content">
-                            <h4>Data Analysis Tool</h4>
-                            <p>Developed command-line tool for exploratory data analysis. Features automated profiling, visualization generation, and statistical summaries.</p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Tool</span>
-                                <span class="tag">CLI</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="link">GitHub</a>
-                                <a href="#" class="link">Details</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- Experience -->
+    <section id="experience" class="projects section fade-in">
         <div class="container">
-            <h2>Get In Touch</h2>
-            <p class="contact-intro">Interested in discussing data engineering, food science, or collaboration opportunities?</p>
-            
-            <div class="contact-content">
+            <div class="section-title">
+                <h2>Experience</h2>
+                <p>Consulting assignments across analytics, data engineering, and platform modernisation.</p>
+            </div>
+
+            <!-- Consid -->
+            <div class="category-section">
+                <h3 class="category-title">Consid — 2023 to present</h3>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">☁️</div>
+                        <div class="project-content">
+                            <h3>Ambea</h3>
+                            <p>Led the migration of Ambea's BI platform from on-premises to Azure. Set up dbt Cloud, Azure Databricks, and Data Factory; built a SQL Server metadata database for data quality management; applied medallion architecture and Kimball-inspired modelling. Used PySpark for Databricks transformations and implemented CI/CD via Git and Azure DevOps.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">dbt Cloud</span>
+                                <span class="project-tag">Azure Databricks</span>
+                                <span class="project-tag">PySpark</span>
+                                <span class="project-tag">Data Factory</span>
+                                <span class="project-tag">Lakehouse</span>
+                                <span class="project-tag">CI/CD</span>
+                                <span class="project-tag">Data modelling</span>
+                                <span class="project-tag">Git</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">📊</div>
+                        <div class="project-content">
+                            <h3>Bostadsförmedlingen</h3>
+                            <p>Modernised and migrated a legacy on-premises BI solution for Stockholm's housing agency. Focus on data modelling, domain expertise, and data quality. Built and optimised ETL processes in SQL Server and SSIS, applied Inmon and Kimball principles, and developed reports and models in Power BI Report Server with DAX.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">SQL Server</span>
+                                <span class="project-tag">SSIS</span>
+                                <span class="project-tag">Power BI</span>
+                                <span class="project-tag">Inmon/Kimball</span>
+                                <span class="project-tag">DAX</span>
+                                <span class="project-tag">Git</span>
+                                <span class="project-tag">On-prem</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Capgemini round 2 -->
+            <div class="category-section">
+                <h3 class="category-title">Capgemini — 2022 to 2023</h3>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">🔧</div>
+                        <div class="project-content">
+                            <h3>Hedin Bil</h3>
+                            <p>Focused squarely on data engineering — building robust pipelines with a strong emphasis on quality, and cost efficiency. Invested in DevOps skills and kept pace with the modern data stack, including Databricks.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Data Pipelines</span>
+                                <span class="project-tag">Azure Data Factory</span>
+                                <span class="project-tag">Azure Databricks</span>
+                                <span class="project-tag">DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Visiba Care -->
+            <div class="category-section">
+                <h3 class="category-title">Visiba Care — 2021 to 2022</h3>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">🏗️</div>
+                        <div class="project-content">
+                            <h3>Data Platform owner</h3>
+                            <p>As a one-person data team at a healthcare startup, built and owned the entire data platform from scratch. Covered Azure services, SQL Server, ETL in Azure Data Factory, T-SQL and Tabular Editor transformations, and CI/CD pipelines (ADF, SQL, Analysis Services, Power BI) in YAML — alongside stakeholder workshops and documentation.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Azure</span>
+                                <span class="project-tag">Data Factory</span>
+                                <span class="project-tag">SQL Server</span>
+                                <span class="project-tag">Power BI</span>
+                                <span class="project-tag">Analysis Services</span>
+                                <span class="project-tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Capgemini round 1 -->
+            <div class="category-section">
+                <h3 class="category-title">Capgemini — 2018 to 2021</h3>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">🚗</div>
+                        <div class="project-content">
+                            <h3>Volvo Cars — Configure Your Volvo</h3>
+                            <p>Tech lead for the global rollout of "Configure Your Volvo" across 30+ markets. Configured legacy backend systems to meet market-specific requirements, maintained stakeholder communication, produced training material, and owned the strategic roadmap. The role demanded significant self-directed learning given sparse documentation for the underlying systems.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Tech Lead</span>
+                                <span class="project-tag">Global Rollout</span>
+                                <span class="project-tag">Stakeholder Management</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image-placeholder">🌍</div>
+                        <div class="project-content">
+                            <h3>Volvo Cars — New Global Function</h3>
+                            <p>Part of a new global function at Volvo Cars, contributing to change management, strategy development, process standardisation, and system ownership. A pivotal role in building the function from the ground up and establishing how it would operate at scale.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Change Management</span>
+                                <span class="project-tag">Strategy</span>
+                                <span class="project-tag">Process Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="certifications section fade-in">
+        <div class="container">
+            <div class="section-title">
+                <h2>Certifications</h2>
+                <p>Formal credentials across data engineering and methodology.</p>
+            </div>
+            <div class="certifications-container">
+
+                <div class="certification-category">
+                    <h3>Data & Engineering</h3>
+                    <div class="certification-list">
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-dbt"><i class="fas fa-cube"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">dbt Developer</span>
+                                <span class="certification-issuer">dbt Labs</span>
+                            </div>
+                            <span class="certification-date">Nov 2025</span>
+                        </div>
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-databricks"><i class="fas fa-fire-flame-curved"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">Certified Data Engineer Associate</span>
+                                <span class="certification-issuer">Databricks</span>
+                            </div>
+                            <span class="certification-date">Nov 2023</span>
+                        </div>
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-databricks"><i class="fas fa-bolt"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">Associate Developer for Apache Spark 3.0</span>
+                                <span class="certification-issuer">Databricks</span>
+                            </div>
+                            <span class="certification-date">Feb 2023</span>
+                        </div>
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-microsoft"><i class="fab fa-microsoft"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">Azure Data Engineer Associate</span>
+                                <span class="certification-issuer">Microsoft</span>
+                            </div>
+                            <span class="certification-date">Nov 2022</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="certification-category">
+                    <h3>Process & Methodology</h3>
+                    <div class="certification-list">
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-safe"><i class="fas fa-sitemap"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">Certified SAFe® 5 Agilist</span>
+                                <span class="certification-issuer">Scaled Agile, Inc.</span>
+                            </div>
+                            <span class="certification-date">Dec 2020</span>
+                        </div>
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-ireb"><i class="fas fa-file-lines"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">CPRE Foundation Level</span>
+                                <span class="certification-issuer">IREB</span>
+                            </div>
+                            <span class="certification-date">Nov 2018</span>
+                        </div>
+
+                        <div class="certification-item">
+                            <div class="certification-icon cert-scrum"><i class="fas fa-rotate"></i></div>
+                            <div class="certification-info">
+                                <span class="certification-name">Professional Scrum Master I</span>
+                                <span class="certification-issuer">Scrum.org</span>
+                            </div>
+                            <span class="certification-date">Sep 2018</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="education section fade-in">
+        <div class="container">
+            <div class="section-title">
+                <h2>Education</h2>
+                <p>Academic foundation in systems science and IT.</p>
+            </div>
+            <div class="education-list">
+
+                <div class="education-card">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content">
+                        <div class="education-header">
+                            <div>
+                                <h3>Göteborgs Universitet</h3>
+                                <p class="education-degree">Bachelor of Science — Systems Science: IT, Human and Organisation</p>
+                            </div>
+                            <span class="education-year">2015 – 2018</span>
+                        </div>
+                        <p class="education-activities">Activities: Java tutoring</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interests -->
+    <section id="interests" class="interests section fade-in">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interests</h2>
+                <p>What I explore beyond the day job.</p>
+            </div>
+            <div class="interests-container">
+                <div class="interest-category">
+                    <h3>Ice Cream Science</h3>
+                    <div class="interest-list">
+                        <div class="interest-item">
+                            <span class="interest-name">Crystallisation & texture formation</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Overrun & aeration physics</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Emulsifier & stabiliser chemistry</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Flavour compound analysis</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Home production & formulation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interest-category">
+                    <h3>Molecular Cooking</h3>
+                    <div class="interest-list">
+                        <div class="interest-item">
+                            <span class="interest-name">Sous vide precision cooking</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Hydrocolloids & gels</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Spherification & encapsulation</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Maillard reaction optimisation</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-name">Food emulsion science</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact section fade-in">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Open to new assignments, collaborations, and conversations about data.</p>
+            </div>
+            <div class="contact-container">
                 <div class="contact-info">
                     <h3>Contact Information</h3>
-                    <div class="contact-item">
-                        <strong>Email:</strong>
-                        <a href="mailto:your.email@example.com">your.email@example.com</a>
+                    <div class="contact-method">
+                        <h4>Email</h4>
+                        <a href="mailto:jakob.agelin@proton.me">jakob.agelin@proton.me</a>
                     </div>
-                    <div class="contact-item">
-                        <strong>Location:</strong>
-                        <span>Mölnlycke, Sweden</span>
+                    <div class="contact-method">
+                        <h4>Location</h4>
+                        <p>Mölnlycke, Sweden</p>
                     </div>
-                    <div class="contact-item">
-                        <strong>LinkedIn:</strong>
-                        <a href="https://linkedin.com" target="_blank">Your LinkedIn Profile</a>
+                    <div class="contact-method">
+                        <h4>LinkedIn</h4>
+                        <a href="https://www.linkedin.com/in/jakobagelin/" target="_blank">LinkedIn</a>
                     </div>
-                    <div class="contact-item">
-                        <strong>GitHub:</strong>
-                        <a href="https://github.com" target="_blank">Your GitHub Profile</a>
+                    <div class="contact-method">
+                        <h4>GitHub</h4>
+                        <a href="https://github.com/yeykawb" target="_blank">GitHub</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://github.com" target="_blank" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
                 </div>
 
                 <form class="contact-form" id="contact-form">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
+                        <label class="form-label" for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <label class="form-label" for="message">Message</label>
+                        <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="submit" class="form-submit">Send Message</button>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer>
         <div class="container">
-            <p>&copy; 2026 Jakob Agelin. All rights reserved.</p>
             <div class="footer-links">
-                <a href="#hero">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+                <a href="#hero" class="footer-link">Home</a>
+                <a href="#about" class="footer-link">About</a>
+                <a href="#experience" class="footer-link">Experience</a>
+                <a href="#certifications" class="footer-link">Certifications</a>
+                <a href="#education" class="footer-link">Education</a>
+                <a href="#interests" class="footer-link">Interests</a>
+                <a href="#contact" class="footer-link">Contact</a>
             </div>
+            <p class="copyright">&copy; 2026 Jakob Agelin. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-sun"></i>
+    </button>
 
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/main.js"></script>

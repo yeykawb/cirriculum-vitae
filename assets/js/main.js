@@ -1,54 +1,112 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+// =====================================================
+//  SCROLL PROGRESS BAR
+// =====================================================
+function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const bar = document.getElementById('scrollProgress');
+    if (bar) bar.style.width = progress + '%';
+}
 
-// Contact form handling
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
-        
-        // Log form submission (in real app, would send to server)
-        console.log('Form submitted:', data);
-        
-        // Show success message
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        contactForm.reset();
+// =====================================================
+//  BACK TO TOP
+// =====================================================
+const backToTopBtn = document.getElementById('backToTop');
+
+function updateBackToTop() {
+    if (!backToTopBtn) return;
+    if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+}
+
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
-// Active nav link highlighting
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
+// =====================================================
+//  FADE-IN ON SCROLL
+// =====================================================
+function checkFadeIns() {
+    const threshold = window.innerHeight - 80;
+    document.querySelectorAll('.fade-in').forEach(function (el) {
+        if (el.getBoundingClientRect().top < threshold) {
+            el.classList.add('visible');
         }
     });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
+}
+
+// =====================================================
+//  SCROLL LISTENER
+// =====================================================
+window.addEventListener('scroll', function () {
+    updateScrollProgress();
+    updateBackToTop();
+    checkFadeIns();
+}, { passive: true });
+
+// Run once on load
+updateScrollProgress();
+updateBackToTop();
+checkFadeIns();
+
+// =====================================================
+//  MOBILE MENU
+// =====================================================
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navMenu = document.getElementById('navMenu');
+
+if (mobileMenuBtn && navMenu) {
+    mobileMenuBtn.addEventListener('click', function () {
+        const isOpen = navMenu.classList.toggle('active');
+        const icon = mobileMenuBtn.querySelector('i');
+        if (icon) icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    navMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            navMenu.classList.remove('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        });
+    });
+}
+
+// =====================================================
+//  SMOOTH SCROLL (with header offset)
+// =====================================================
+document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const offset = 64;
+        const targetPos = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
     });
 });
+
+// =====================================================
+//  CONTACT FORM
+// =====================================================
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = this.querySelector('.form-submit');
+        if (!btn) return;
+        const original = btn.textContent;
+        btn.textContent = 'Sent!';
+        btn.disabled = true;
+        this.reset();
+        setTimeout(function () {
+            btn.textContent = original;
+            btn.disabled = false;
+        }, 3000);
+    });
+}
