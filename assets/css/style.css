@@ -1444,3 +1444,184 @@ footer {
         gap: 20px;
     }
 }
+
+/* =====================================================
+   A — TYPED CURSOR
+   ===================================================== */
+.typed-cursor {
+    display: inline-block;
+    color: var(--apple-orange);
+    font-weight: 300;
+    animation: blink-cursor 0.9s step-end infinite;
+    margin-left: 1px;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* =====================================================
+   B+J — CARD STAGGER ENTRANCE
+   ===================================================== */
+.project-card,
+.certification-category,
+.interest-category {
+    opacity: 0;
+    transform: translateY(14px);
+}
+
+.project-card.card-visible,
+.certification-category.card-visible,
+.interest-category.card-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.45s ease,
+                transform 0.3s cubic-bezier(0.42, 0, 0.58, 1),
+                box-shadow 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+/* Restore hover effects at higher specificity so they beat card-visible */
+.project-card.card-visible:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.certification-category.card-visible:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.interest-category.card-visible:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* =====================================================
+   C — ACTIVE NAV LINK
+   ===================================================== */
+nav ul li a.active {
+    color: var(--apple-orange);
+}
+
+.dark-mode nav ul li a.active {
+    color: var(--apple-orange);
+}
+
+/* =====================================================
+   I — SKILL PILL STAGGER ENTRANCE
+   ===================================================== */
+.skill-pill,
+.radar-pill {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.42, 0, 0.58, 1),
+                background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.skill-pill.pill-visible,
+.radar-pill.pill-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* =====================================================
+   Interest item hover
+   ===================================================== */
+.interest-item:hover {
+    padding-left: 8px;
+}
+
+.interest-item:hover .interest-name {
+    color: var(--apple-orange);
+}
+
+.dark-mode .interest-item:hover .interest-name {
+    color: var(--apple-orange);
+}
+
+/* =====================================================
+   E — COPY TOAST
+   ===================================================== */
+#copy-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(16px);
+    background-color: var(--apple-text);
+    color: var(--apple-white);
+    padding: 9px 22px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+#copy-toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dark-mode #copy-toast {
+    background-color: #f0f0f0;
+    color: #1d1d1f;
+}
+
+.copyable {
+    cursor: pointer;
+    position: relative;
+}
+
+/* =====================================================
+   G — SECTION DOT NAVIGATION
+   ===================================================== */
+#dot-nav {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    z-index: 900;
+}
+
+.dot-nav-item {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--apple-mid-gray);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.25s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.dot-nav-item:hover,
+.dot-nav-item.active {
+    background-color: var(--apple-orange);
+    transform: scale(1.5);
+}
+
+.dark-mode .dot-nav-item {
+    background-color: #555;
+}
+
+.dark-mode .dot-nav-item:hover,
+.dark-mode .dot-nav-item.active {
+    background-color: var(--apple-orange);
+}
+
+@media (max-width: 768px) {
+    #dot-nav { display: none; }
+}
+
+/* =====================================================
+   H — HERO CONTENT TRANSITION (parallax return)
+   ===================================================== */
+.hero-content {
+    transition: transform 0.12s ease-out;
+}
