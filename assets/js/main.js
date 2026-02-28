@@ -98,11 +98,13 @@ if (contactForm) {
 function initTyped() {
     const el = document.getElementById('typed-text');
     if (!el) return;
-    const text = 'Data Engineer';
+    const texts = ['Data Engineer', 'Father Of Two', 'Ice Cream Hobbyist', 'Sourdough Adept'];
+    let textIndex = 0;
     let i = 0;
     let deleting = false;
 
     function tick() {
+        const text = texts[textIndex];
         if (!deleting) {
             // Typing forward
             el.textContent = text.slice(0, i);
@@ -119,9 +121,10 @@ function initTyped() {
             el.textContent = text.slice(0, i);
             i--;
             if (i < 0) {
-                // Fully deleted — brief pause then type again
+                // Fully deleted — advance to next string, brief pause then type
                 deleting = false;
                 i = 0;
+                textIndex = (textIndex + 1) % texts.length;
                 setTimeout(tick, 400);
                 return;
             }
