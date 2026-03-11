@@ -902,6 +902,13 @@ nav a:hover {
 }
 
 /* =====================================================
+   PORTFOLIO
+   ===================================================== */
+.portfolio {
+    background-color: var(--apple-light-gray);
+}
+
+/* =====================================================
    CONTACT
    ===================================================== */
 .contact {
@@ -1325,6 +1332,11 @@ footer {
 
 .dark-mode .interest-category:hover {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Portfolio */
+.dark-mode .portfolio {
+    background-color: #1a1a1a;
 }
 
 .dark-mode .interest-category h3 {

@@ -247,8 +247,8 @@ function initClipboard() {
 //  G — SECTION DOT NAVIGATION
 // =====================================================
 function initDotNav() {
-    var sectionIds  = ['hero', 'about', 'experience', 'certifications', 'education', 'interests', 'contact'];
-    var labels      = ['Home', 'About', 'Experience', 'Certifications', 'Education', 'Interests', 'Contact'];
+    var sectionIds  = ['hero', 'about', 'experience', 'certifications', 'education', 'interests', 'portfolio', 'contact'];
+    var labels      = ['Home', 'About', 'Experience', 'Certifications', 'Education', 'Interests', 'Portfolio', 'Contact'];
 
     var nav = document.createElement('nav');
     nav.id = 'dot-nav';

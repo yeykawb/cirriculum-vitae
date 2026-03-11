@@ -29,6 +29,7 @@
                     <li><a href="#certifications">Certifications</a></li>
                     <li><a href="#education">Education</a></li>
                     <li><a href="#interests">Interests</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -428,6 +429,52 @@
         </div>
     </section>
 
+    <!-- Portfolio -->
+    <section id="portfolio" class="portfolio section fade-in">
+        <div class="container">
+            <div class="section-title">
+                <h2>Portfolio</h2>
+                <p>Things I build outside of work.</p>
+            </div>
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <div class="project-image-placeholder">🍦</div>
+                    <div class="project-content">
+                        <h3>Ice Cream Analytics</h3>
+                        <p>A personal data platform for ice cream experimentation. Raw batch records flow through DuckDB-powered transformations — deriving fat %, PAC, POD, and FPD per batch — into a scored sensory dashboard. A medallion architecture applied to home cooking.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">DuckDB</span>
+                            <span class="project-tag">dbt</span>
+                            <span class="project-tag">Data Modelling</span>
+                            <span class="project-tag">Analytics Engineering</span>
+                            <span class="project-tag">Chart.js</span>
+                        </div>
+                        <a class="arch-btn" href="https://github.com/yeykawb/ice-cream-analytics" target="_blank" rel="noopener">GitHub →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-placeholder">🔁</div>
+                    <div class="project-content">
+                        <h3>dbt + PostgreSQL Data Platform</h3>
+                        <p>A fully containerised end-to-end ELT project. Python scripts mock upstream sources, loading raw data into PostgreSQL. dbt transforms it through bronze, staging, intermediate, and mart layers — with data quality tests, snapshots for SCDs, and auto-generated docs. Runs locally via Docker Compose and VS Code Dev Containers.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">dbt</span>
+                            <span class="project-tag">PostgreSQL</span>
+                            <span class="project-tag">Docker</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Metabase</span>
+                            <span class="project-tag">sqlfluff</span>
+                        </div>
+                        <a class="arch-btn" href="https://github.com/yeykawb/consid_dbt" target="_blank" rel="noopener">GitHub →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="contact section fade-in">
         <div class="container">
@@ -440,7 +487,7 @@
                     <h3>Contact Information</h3>
                     <div class="contact-method">
                         <h4>Email</h4>
-                        <a href="mailto:jakob.agelin@proton.me" data-copy="jakob.agelin@proton.me">jakob.agelin@proton.me</a>
+                        <a href="mailto:yeykawb@proton.me" data-copy="yeykawb@proton.me">yeykawb@proton.me</a>
                     </div>
                     <div class="contact-method">
                         <h4>Phone</h4>
