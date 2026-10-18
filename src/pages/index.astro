@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Certifications from '../components/Certifications.astro';
+import Education from '../components/Education.astro';
+import OutsideWork from '../components/OutsideWork.astro';
+import Closing from '../components/Closing.astro';
+import SectionIndex from '../components/SectionIndex.astro';
+import { cv } from '../data/cv';
+---
+
+<Base title={`${cv.name} — ${cv.title}`} description={cv.summary}>
+    <Hero />
+    <main>
+        <About />
+        <Experience />
+        <Skills />
+        <Certifications />
+        <Education />
+        <OutsideWork />
+        <Closing />
+    </main>
+    <SectionIndex />
+</Base>

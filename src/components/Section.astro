@@ -1,0 +1,39 @@
+---
+// One section of the scroll: a stable anchor id, an h2 set as a small letter-spaced label,
+// and a single narrow centred column for its content.
+interface Props {
+    /** Stable anchor id, e.g. "experience". The margin index links to it. */
+    id: string;
+    /** Heading text, e.g. "Experience". Shown in capitals by CSS. */
+    label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<section id={id} class="section" aria-labelledby={`${id}-heading`}>
+    <h2 id={`${id}-heading`} class="section-label">{label}</h2>
+    <slot />
+</section>
+
+<style>
+    .section {
+        /* Positioning context for a Motif. */
+        position: relative;
+        max-width: var(--column);
+        margin: 0 auto;
+        padding: 4.5rem 1.5rem;
+        /* Keeps the heading clear of the top edge when jumped to. */
+        scroll-margin-top: 2rem;
+    }
+
+    .section-label {
+        margin: 0 0 2.5rem;
+        font-family: var(--font-sans);
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--grey);
+    }
+</style>

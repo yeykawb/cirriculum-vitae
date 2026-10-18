@@ -1,0 +1,73 @@
+---
+// The shared entry layout for Experience, Education and Outside work:
+// dates in a small grey left margin on desktop, inline above the entry on mobile.
+// Dates come first in the DOM so they read before the title on every screen.
+interface Props {
+    /** As displayed, e.g. "2023 – present". Omit for undated entries. */
+    dates?: string;
+    /** The entry's heading, set as an h3 (entries live under a section's h2). */
+    title: string;
+    /** A quiet grey line under the title, e.g. a job title or an issuer. */
+    meta?: string;
+}
+
+const { dates, title, meta } = Astro.props;
+---
+
+<article class="entry">
+    {dates && <p class="entry-dates">{dates}</p>}
+    <h3 class="entry-title">{title}</h3>
+    {meta && <p class="entry-meta">{meta}</p>}
+    <div class="entry-body">
+        <slot />
+    </div>
+</article>
+
+<style>
+    .entry {
+        position: relative;
+    }
+
+    .entry + .entry {
+        margin-top: 3.25rem;
+    }
+
+    .entry-dates {
+        margin: 0 0 0.35rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--grey);
+    }
+
+    .entry-title {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.25;
+        color: var(--ink);
+    }
+
+    .entry-meta {
+        margin: 0.2rem 0 0;
+        font-size: 0.85rem;
+        color: var(--grey);
+    }
+
+    .entry-body {
+        margin-top: 1.5rem;
+    }
+
+    /* Wide enough for the margin: the column is centred and the dates hang to its left. */
+    @media (min-width: 60rem) {
+        .entry-dates {
+            position: absolute;
+            top: 0.5rem;
+            right: 100%;
+            width: 9rem;
+            margin: 0 2rem 0 0;
+            text-align: right;
+            white-space: nowrap;
+        }
+    }
+</style>

@@ -1,0 +1,61 @@
+---
+import Section from './Section.astro';
+import Motif from './Motif.astro';
+import { cv, contactLinks, resumeLink } from '../data/cv';
+
+const { email, phone, linkedin, github } = contactLinks(cv.contact);
+const resume = resumeLink(cv.resume, import.meta.env.BASE_URL);
+// Same three lines as the hero.
+const lines = [[email, phone], [linkedin, github], [resume]];
+---
+
+<Section id="contact" label="Contact">
+    <Motif name="moon" />
+    <p class="closing-line">{cv.closingLine}</p>
+    <address class="closing-links">
+        {
+            lines.map((line) => (
+                <p>
+                    {line.map((link, i) => (
+                        <>
+                            {i > 0 && <span aria-hidden="true"> · </span>}
+                            <a href={link.href}>{link.label}</a>
+                        </>
+                    ))}
+                </p>
+            ))
+        }
+    </address>
+</Section>
+
+<style>
+    /* The moonlit Motif's width, and room below the content for it: the landscape is about
+       3 times wider than tall. On wide screens it stays clear of the margin index (the
+       rightmost 14rem). */
+    :global(#contact) {
+        --moon-width: min(100vw, 56rem);
+        padding-bottom: calc(1.5rem + var(--moon-width) / 3);
+    }
+
+    @media (min-width: 64rem) {
+        :global(#contact) {
+            --moon-width: min(56rem, 100vw - 28rem);
+        }
+    }
+
+    .closing-line {
+        margin: 0;
+    }
+
+    .closing-links {
+        margin-top: 1.5rem;
+        font-style: normal;
+        font-size: 0.9rem;
+        line-height: 1.9;
+        color: var(--grey);
+    }
+
+    .closing-links p {
+        margin: 0;
+    }
+</style>

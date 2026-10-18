@@ -1,0 +1,72 @@
+---
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import Motif from './Motif.astro';
+import { cv } from '../data/cv';
+---
+
+<Section id="outside-work" label="Outside work">
+    <Motif name="geese" />
+    <div class="interests">
+        {
+            cv.outsideWork.interests.map((interest) => (
+                <p class="interest">
+                    <span class="interest-name">{interest.name}.</span> {interest.description}
+                </p>
+            ))
+        }
+    </div>
+    {
+        cv.outsideWork.projects.map((project) => (
+            <Entry title={project.name}>
+                <p class="project-text">{project.description}</p>
+                <p class="project-tech">{project.tech.join(' · ')}</p>
+                <p class="project-links">
+                    {project.links.map((link, i) => (
+                        <>
+                            {i > 0 && <span aria-hidden="true"> · </span>}
+                            <a href={link.href} aria-label={`${project.name} on ${link.label}`}>
+                                {link.label}
+                            </a>
+                        </>
+                    ))}
+                </p>
+            </Entry>
+        ))
+    }
+</Section>
+
+<style>
+    .interests {
+        margin-bottom: 3.25rem;
+    }
+
+    .interest {
+        margin: 0;
+    }
+
+    .interest + .interest {
+        margin-top: 1rem;
+    }
+
+    .interest-name {
+        color: var(--ink);
+    }
+
+    .project-text {
+        margin: 0;
+    }
+
+    .project-tech {
+        margin: 0.6rem 0 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--grey);
+    }
+
+    .project-links {
+        margin: 0.8rem 0 0;
+        font-size: 0.85rem;
+        color: var(--grey);
+    }
+</style>

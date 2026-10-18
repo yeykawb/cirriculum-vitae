@@ -1,0 +1,39 @@
+---
+import Section from './Section.astro';
+import Motif from './Motif.astro';
+import { cv } from '../data/cv';
+---
+
+<Section id="skills" label="Skills">
+    <Motif name="bamboo" />
+    <dl class="skills">
+        {
+            cv.skills.map((group) => (
+                <div class="skill-group">
+                    <dt class="skill-name">{group.name}</dt>
+                    <dd class="skill-items">{group.items.join(', ')}</dd>
+                </div>
+            ))
+        }
+    </dl>
+</Section>
+
+<style>
+    .skills {
+        margin: 0;
+    }
+
+    .skill-group + .skill-group {
+        margin-top: 1.75rem;
+    }
+
+    .skill-name {
+        margin: 0 0 0.3rem;
+        font-size: 0.85rem;
+        color: var(--grey);
+    }
+
+    .skill-items {
+        margin: 0;
+    }
+</style>

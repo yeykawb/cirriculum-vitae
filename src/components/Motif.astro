@@ -1,0 +1,104 @@
+---
+// A Motif: a faded fragment of a CC0 artwork (provenance in the README, never on the page).
+// The image is ink only: one ink tone with the paper knocked out into transparency (alpha is the
+// darkness of the painting), so only the brushwork lands on the Washi. (A multiply blend would be
+// the other way, but <main> is its own stacking context and would isolate it.) Motifs sit in
+// margins and corners, never under text, are hidden from assistive tech and load lazily. The
+// parent Section is the positioning context.
+import { Image } from 'astro:assets';
+import pine from '../assets/motifs/aged-pine.webp';
+import bamboo from '../assets/motifs/bamboo.webp';
+import geese from '../assets/motifs/geese.webp';
+import moon from '../assets/motifs/moonlit-landscape.webp';
+
+interface Props {
+    /** Which artwork, and with it where it sits (see the styles). */
+    name: 'pine' | 'bamboo' | 'geese' | 'moon';
+}
+
+const { name } = Astro.props;
+const images = { pine, bamboo, geese, moon };
+const widths = { pine: [320, 480], bamboo: [320, 480], geese: [400, 640, 800], moon: [640, 1024, 1600] };
+---
+
+<div class={`motif motif-${name}`} aria-hidden="true">
+    <Image
+        src={images[name]}
+        alt=""
+        widths={widths[name]}
+        sizes={name === 'moon' ? 'min(100vw, 56rem)' : '24rem'}
+        loading="lazy"
+        decoding="async"
+    />
+</div>
+
+<style>
+    .motif {
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .motif :global(img) {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Aged Pine: reaches into Experience from the far left, outside the Entry dates.
+       Only where the margin is wide enough to hold it. */
+    .motif-pine {
+        display: none;
+        opacity: 0.42;
+    }
+
+    /* Bamboo: a spray at the foot of Skills, running down into Certifications. Neither has dates,
+       so the whole left margin is free. */
+    .motif-bamboo {
+        display: none;
+        opacity: 0.38;
+    }
+
+    /* Geese: a corner above the label of Outside work on small screens, the left margin on wide ones. */
+    .motif-geese {
+        top: 0.4rem;
+        right: 1rem;
+        width: 9rem;
+        opacity: 0.5;
+    }
+
+    /* Moon: the page ends under it. Sits below the Closing content, which keeps its room. */
+    .motif-moon {
+        left: 50%;
+        bottom: 0;
+        /* Set by Closing, which also keeps the room below its content. */
+        width: var(--moon-width);
+        translate: -50% 0;
+        opacity: 0.55;
+    }
+
+    @media (min-width: 64rem) {
+        .motif-bamboo {
+            display: block;
+            bottom: -7rem;
+            right: calc(100% + 0.5rem);
+            width: min(20rem, calc(50vw - 19rem));
+        }
+
+        .motif-geese {
+            top: 2rem;
+            right: calc(100% + 0.5rem);
+            width: min(24rem, calc(50vw - 19rem));
+        }
+    }
+
+    @media (min-width: 80rem) {
+        .motif-pine {
+            display: block;
+            top: 6rem;
+            right: calc(100% + 10rem);
+            width: min(15rem, calc(50vw - 28rem));
+        }
+    }
+</style>

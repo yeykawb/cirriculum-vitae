@@ -1,0 +1,53 @@
+---
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import Motif from './Motif.astro';
+import { cv, hasAssignments } from '../data/cv';
+import type { Assignment, Employer, Work } from '../data/cv';
+
+/** An Employer's Assignments, or its single role as one untitled piece of work. */
+function workOf(employer: Employer): (Work & Partial<Pick<Assignment, 'client'>>)[] {
+    return hasAssignments(employer) ? employer.assignments : [employer.role];
+}
+---
+
+<Section id="experience" label="Experience">
+    <Motif name="pine" />
+    {
+        cv.employers.map((employer) => (
+            <Entry dates={employer.period} title={employer.name} meta={employer.position}>
+                {workOf(employer).map((work) => (
+                    <div class="work">
+                        {work.client && <h4 class="work-title">{work.client}</h4>}
+                        <p class="work-text">{work.description}</p>
+                        {work.tech && <p class="work-tech">{work.tech.join(' · ')}</p>}
+                    </div>
+                ))}
+            </Entry>
+        ))
+    }
+</Section>
+
+<style>
+    .work + .work {
+        margin-top: 2rem;
+    }
+
+    .work-title {
+        margin: 0 0 0.4rem;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--ink);
+    }
+
+    .work-text {
+        margin: 0;
+    }
+
+    .work-tech {
+        margin: 0.6rem 0 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--grey);
+    }
+</style>

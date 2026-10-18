@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import portrait from '../assets/portrait.jpg';
+import { cv } from '../data/cv';
+---
+
+<Section id="about" label="About">
+    <div class="about">
+        <div class="about-portrait">
+            <Image
+                src={portrait}
+                width={400}
+                height={400}
+                format="webp"
+                loading="lazy"
+                alt={cv.portraitAlt}
+            />
+        </div>
+        <p class="about-text">{cv.about}</p>
+    </div>
+</Section>
+
+<style>
+    .about {
+        display: grid;
+        gap: 1.75rem;
+        align-items: center;
+    }
+
+    .about-text {
+        margin: 0;
+        line-height: 1.75;
+    }
+
+    /* A quiet ink-wash portrait: black and white, multiplied into the washi, with the dark
+       studio backdrop dissolving close to the head instead of forming a ring. */
+    .about-portrait {
+        width: 8rem;
+        height: 8rem;
+        overflow: hidden;
+        mix-blend-mode: multiply;
+        -webkit-mask-image: radial-gradient(ellipse 36% 42% at 50% 48%, #000 35%, transparent 100%);
+        mask-image: radial-gradient(ellipse 36% 42% at 50% 48%, #000 35%, transparent 100%);
+    }
+
+    .about-portrait :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.15);
+        transform-origin: 50% 45%;
+        filter: grayscale(1) contrast(0.55) brightness(1.4);
+    }
+
+    @media (min-width: 36rem) {
+        .about {
+            grid-template-columns: 8rem 1fr;
+            gap: 2rem;
+        }
+    }
+</style>

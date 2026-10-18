@@ -1,0 +1,9 @@
+---
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import { cv } from '../data/cv';
+---
+
+<Section id="education" label="Education">
+    <Entry dates={cv.education.period} title={cv.education.school} meta={cv.education.degree} />
+</Section>
