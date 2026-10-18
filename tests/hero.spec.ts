@@ -248,6 +248,19 @@ test.describe('scrolling through the hero', () => {
         expect(midPin!.y).toBeCloseTo(atTop!.y, 0);
     });
 
+    test('a covered contact link shows again when tabbed to', async ({ page }) => {
+        await scrollToProgress(page, 1);
+        const email = page.getByRole('banner').getByRole('link', { name: /@/ });
+        const clip = (await email.boundingBox())!;
+        const look = async () => (await page.screenshot({ clip })).length;
+        const covered = await look();
+
+        await email.focus();
+        await settle(page);
+        // Covered, the link is flat paper; focused, its text is drawn again.
+        expect(await look()).toBeGreaterThan(covered * 2);
+    });
+
     test.describe('with reduced motion', () => {
         test.use({ reducedMotion: 'reduce' });
 

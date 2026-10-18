@@ -1,13 +1,13 @@
 ---
 import Section from './Section.astro';
 import Entry from './Entry.astro';
-import { outsideWork } from '../data/cv';
+import { cv } from '../data/cv';
 ---
 
 <Section id="outside-work" label="Outside work">
     <div class="interests">
         {
-            outsideWork.interests.map((interest) => (
+            cv.outsideWork.interests.map((interest) => (
                 <p class="interest">
                     <span class="interest-name">{interest.name}.</span> {interest.description}
                 </p>
@@ -15,7 +15,7 @@ import { outsideWork } from '../data/cv';
         }
     </div>
     {
-        outsideWork.projects.map((project) => (
+        cv.outsideWork.projects.map((project) => (
             <Entry title={project.name}>
                 <p class="project-text">{project.description}</p>
                 <p class="project-tech">{project.tech.join(' · ')}</p>

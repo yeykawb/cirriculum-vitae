@@ -296,6 +296,12 @@ const lines = [
         opacity: calc(1 - var(--hero-progress) * 0.5);
     }
 
+    /* A keyboard visitor tabbing to a covered contact link still sees it. */
+    :global(html.hero-motion) .hero-intro:focus-within {
+        z-index: 8;
+        opacity: 1;
+    }
+
     /* On a phone the stage is wider than the screen so the inner circle can
        hold the text. The left and right strokes bleed off the edges and the
        hero clips them. The Ensō stays square. The pin is shorter. */
@@ -307,10 +313,6 @@ const lines = [
         :global(html.hero-motion) .hero {
             height: 200svh;
             --ridge-4-travel: 125%;
-        }
-
-        :global(html.hero-motion) .hero ~ :global(main) {
-            margin-top: -79svh;
         }
 
         .hero-stage :global(.hero-art) {

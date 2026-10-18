@@ -68,6 +68,30 @@ export interface Education {
     period: string;
 }
 
+export interface Interest {
+    name: string;
+    /** One sentence, first person. */
+    description: string;
+}
+
+export interface ProjectLink {
+    label: string;
+    href: string;
+}
+
+export interface Project {
+    name: string;
+    description: string;
+    /** Technologies, shown as one quiet line. */
+    tech: string[];
+    links: ProjectLink[];
+}
+
+export interface OutsideWork {
+    interests: Interest[];
+    projects: Project[];
+}
+
 export interface Resume {
     /** Link text for the print version. */
     label: string;
@@ -89,6 +113,9 @@ export interface CV {
     /** In display order. */
     certifications: CertificationGroup[];
     education: Education;
+    outsideWork: OutsideWork;
+    /** One modest line that opens the Closing section. */
+    closingLine: string;
     resume: Resume;
 }
 
@@ -248,6 +275,46 @@ export const cv: CV = {
         degree: 'BSc Systems Science, IT, Human and Organisation',
         period: '2015 – 2018',
     },
+    outsideWork: {
+        interests: [
+            {
+                name: 'Ice cream science',
+                description:
+                    'I make ice cream at home and am fascinated by the crystallisation, aeration and ' +
+                    'emulsifier chemistry that decide its texture.',
+            },
+            {
+                name: 'Sourdough baking',
+                description:
+                    'I bake sourdough, tinkering with starters, hydration and long cold proofs to ' +
+                    'get the flavour, crust and crumb right.',
+            },
+        ],
+        projects: [
+            {
+                name: 'Ice Cream Analytics',
+                description:
+                    'A personal data platform for my ice cream batches: DuckDB transformations ' +
+                    'turn raw records into a scored sensory dashboard, a medallion architecture ' +
+                    'applied to home cooking.',
+                tech: ['DuckDB', 'dbt', 'Data modelling', 'Analytics engineering', 'Chart.js'],
+                links: [
+                    { label: 'GitHub', href: 'https://github.com/yeykawb/ice-cream-analytics' },
+                    { label: 'Explore', href: 'https://yeykawb.github.io/ice-cream-analytics/' },
+                ],
+            },
+            {
+                name: 'dbt + PostgreSQL data platform',
+                description:
+                    'A containerised end-to-end ELT example: mocked sources load into PostgreSQL ' +
+                    'and dbt takes them through bronze, staging, intermediate and mart layers, ' +
+                    'with tests, snapshots and generated docs.',
+                tech: ['dbt', 'PostgreSQL', 'Docker', 'Python', 'Metabase', 'sqlfluff'],
+                links: [{ label: 'GitHub', href: 'https://github.com/yeykawb/consid_dbt' }],
+            },
+        ],
+    },
+    closingLine: "If something here sounds like what you're looking for, I'd be glad to talk.",
     resume: {
         label: 'Download PDF resume',
         file: 'Jakob_Agelin_Resume.pdf',
@@ -290,78 +357,3 @@ export function contactLinks(contact: Contact): ContactLinks {
 export function resumeLink(resume: Resume, base: string): ContactLink {
     return { label: resume.label, href: `${base.replace(/\/$/, '')}/${resume.file}` };
 }
-
-// Outside work and Closing.
-
-export interface Interest {
-    name: string;
-    /** One sentence, first person. */
-    description: string;
-}
-
-export interface ProjectLink {
-    label: string;
-    href: string;
-}
-
-export interface Project {
-    name: string;
-    description: string;
-    /** Technologies, shown as one quiet line. */
-    tech: string[];
-    links: ProjectLink[];
-}
-
-export interface OutsideWork {
-    interests: Interest[];
-    projects: Project[];
-}
-
-export const outsideWork: OutsideWork = {
-    interests: [
-        {
-            name: 'Ice cream science',
-            description:
-                'I make ice cream at home and am fascinated by the crystallisation, aeration and ' +
-                'emulsifier chemistry that decide its texture.',
-        },
-        {
-            name: 'Sourdough baking',
-            description:
-                'I bake sourdough, tinkering with starters, hydration and long cold proofs to ' +
-                'get the flavour, crust and crumb right.',
-        },
-    ],
-    projects: [
-        {
-            name: 'Ice Cream Analytics',
-            description:
-                'A personal data platform for my ice cream batches: DuckDB transformations ' +
-                'turn raw records into a scored sensory dashboard, a medallion architecture ' +
-                'applied to home cooking.',
-            tech: ['DuckDB', 'dbt', 'Data modelling', 'Analytics engineering', 'Chart.js'],
-            links: [
-                { label: 'GitHub', href: 'https://github.com/yeykawb/ice-cream-analytics' },
-                { label: 'Explore', href: 'https://yeykawb.github.io/ice-cream-analytics/' },
-            ],
-        },
-        {
-            name: 'dbt + PostgreSQL data platform',
-            description:
-                'A containerised end-to-end ELT example: mocked sources load into PostgreSQL ' +
-                'and dbt takes them through bronze, staging, intermediate and mart layers, ' +
-                'with tests, snapshots and generated docs.',
-            tech: ['dbt', 'PostgreSQL', 'Docker', 'Python', 'Metabase', 'sqlfluff'],
-            links: [{ label: 'GitHub', href: 'https://github.com/yeykawb/consid_dbt' }],
-        },
-    ],
-};
-
-export interface Closing {
-    /** One modest line above the links. */
-    line: string;
-}
-
-export const closing: Closing = {
-    line: "If something here sounds like what you're looking for, I'd be glad to talk.",
-};
