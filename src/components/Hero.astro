@@ -1,62 +1,122 @@
 ---
-import { cv, contactLinks } from '../data/cv';
+import { Image } from 'astro:assets';
+import { cv, contactLinks, resumeLink } from '../data/cv';
+import enso from '../assets/enso.png';
+import hanko from '../assets/hanko.svg';
+import HeroArt from './HeroArt.astro';
 
 const { email, phone, linkedin, github } = contactLinks(cv.contact);
-// Two lines, as on the PDF.
+const resume = resumeLink(cv.resume, import.meta.env.BASE_URL);
+// Three lines under the summary, as on the PDF plus the print version.
 const lines = [
     [email, phone],
     [linkedin, github],
+    [resume],
 ];
 ---
 
 <header class="hero">
-    <div class="hero-intro">
-        <h1 class="hero-name">{cv.name}</h1>
-        <p class="hero-title">{cv.title}</p>
-        <p class="hero-summary">{cv.summary}</p>
-        <address class="hero-contact">
-            {
-                lines.map((line) => (
-                    <p>
-                        {line.map((link, i) => (
-                            <>
-                                {i > 0 && <span aria-hidden="true"> · </span>}
-                                <a href={link.href}>{link.label}</a>
-                            </>
-                        ))}
-                    </p>
-                ))
-            }
-        </address>
+    <div class="hero-stage">
+        <Image
+            class="hero-enso"
+            src={enso}
+            alt=""
+            aria-hidden="true"
+            widths={[640, 960, 1280, 1600]}
+            sizes="(max-width: 40rem) 124vw, min(124vw, 106svh)"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+        />
+        <HeroArt />
+        <div class="hero-intro">
+            <h1 class="hero-name">
+                {cv.name}
+                <img class="hero-hanko" src={hanko.src} alt="" aria-hidden="true" width="32" height="32" />
+            </h1>
+            <p class="hero-title">{cv.title}</p>
+            <p class="hero-summary">{cv.summary}</p>
+            <address class="hero-contact">
+                {
+                    lines.map((line) => (
+                        <p>
+                            {line.map((link, i) => (
+                                <>
+                                    {i > 0 && <span aria-hidden="true"> · </span>}
+                                    <a href={link.href}>{link.label}</a>
+                                </>
+                            ))}
+                        </p>
+                    ))
+                }
+            </address>
+        </div>
     </div>
 </header>
 
 <style>
     .hero {
-        min-height: 100svh;
-        display: grid;
-        place-items: center;
-        padding: 4rem 1.5rem;
-        text-align: center;
+        position: relative;
+        height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: clip;
+    }
+
+    /* The stage is the Ensō image square. The PDF leaves a tenth of padding
+       around the circle, so the stage can run past the viewport a little
+       without cropping the stroke. Art and text are placed in stage units. */
+    .hero-stage {
+        position: relative;
+        flex: none;
+        width: min(124vw, 106svh);
+        aspect-ratio: 1;
+        container-type: inline-size;
+    }
+
+    .hero-stage :global(.hero-enso) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
     }
 
     .hero-intro {
-        max-width: var(--column);
+        position: absolute;
+        left: 50%;
+        top: 49%;
+        transform: translate(-50%, -52%);
+        width: max(46cqi, 18rem);
+        text-align: center;
+        z-index: 7;
     }
 
     .hero-name {
+        position: relative;
+        display: inline-block;
         font-family: var(--font-serif);
         font-weight: 300;
-        font-size: clamp(2.6rem, 9vw, 4.4rem);
+        font-size: max(1.9rem, 5.8cqi);
         letter-spacing: 0.02em;
         line-height: 1.1;
         color: var(--ink);
         margin: 0;
     }
 
+    .hero-hanko {
+        position: absolute;
+        left: 100%;
+        bottom: 0.3em;
+        margin-left: 0.5em;
+        width: max(0.42em, 1.1rem);
+        height: max(0.42em, 1.1rem);
+    }
+
     .hero-title {
-        margin: 0.9rem 0 0;
-        font-size: 0.72rem;
+        margin: 0.7em 0 0;
+        font-size: max(0.66rem, 1.3cqi);
         font-weight: 400;
         letter-spacing: 0.32em;
         text-transform: uppercase;
@@ -64,20 +124,28 @@ const lines = [
     }
 
     .hero-summary {
-        margin: 2.5rem auto 0;
-        max-width: 30rem;
+        margin: 2.2em 0 0;
+        font-size: max(0.84rem, 1.62cqi);
         line-height: 1.7;
     }
 
     .hero-contact {
-        margin-top: 2rem;
+        margin-top: 1.8em;
         font-style: normal;
-        font-size: 0.8rem;
+        font-size: max(0.74rem, 1.4cqi);
         line-height: 1.8;
         color: var(--grey);
     }
 
     .hero-contact p {
         margin: 0;
+    }
+
+    /* On a phone the circle is too small to hold the text, so the Ensō is
+       stretched taller; the art stays square, anchored to the bottom. */
+    @media (max-width: 40rem) {
+        .hero-stage {
+            aspect-ratio: 4 / 5;
+        }
     }
 </style>
