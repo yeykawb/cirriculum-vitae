@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] `redesign` branch created from `main`; `main` untouched
 - [ ] nvm installed and Node 24 LTS active (machine currently has Node 12)
