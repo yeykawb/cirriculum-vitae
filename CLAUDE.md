@@ -24,20 +24,22 @@ Astro 7 backgrounds `astro dev` and `astro preview` when it detects an AI agent.
 ## Layout
 
 - `src/data/cv.ts`: typed CV data. The single source of truth for every CV fact. Exports `cv` (typed as `CV`) and the helpers `contactLinks()`, `resumeLink()` and `hasAssignments()`.
-- `src/layouts/Base.astro`: HTML shell, head and Google Fonts.
+- `src/layouts/Base.astro`: HTML shell, head and Google Fonts. Also owns the meta description, canonical, Open Graph and Twitter tags and the favicon, with absolute URLs built from `site` and the base path.
 - `src/components/`: one component per section, plus shared pieces:
     - `Section.astro`: the section wrapper. Takes `id` and `label` and renders the h2.
     - `Entry.astro`: the entry layout with dates in a left margin on desktop. Used by Experience, Education and Outside work.
     - `HeroArt.astro`: the hero's SVG Ridges, sun and birds. Each layer is addressable via `data-hero-layer`.
     - `Hero.astro` also holds the scroll choreography. An inline vanilla script writes scroll progress to `--hero-progress` and adds `html.hero-motion`. Without JS, or with `prefers-reduced-motion`, the hero is static and unpinned.
+    - `SectionIndex.astro`: the margin section index. A fixed right-margin `<nav aria-label="Sections">`, desktop only (≥64rem). It appears once the first section (About) is reached, which is after the hero pin, and needs JS. The current section is marked with `aria-current="location"`.
+    - `Motif.astro`: one ink-wash Motif by `name`: `pine`, `bamboo`, `geese` or `moon`. Mounted in Experience, Skills, Outside work and Closing. Its styles take `--moon-width`, which `Closing.astro` sets.
 - `src/pages/index.astro`: the single page.
-- `src/styles/global.css`: palette and font custom properties.
-- `src/assets/`: images, processed by Astro's image pipeline.
-- `public/`: files served as-is, including the PDF resume.
+- `src/styles/global.css`: palette and font custom properties. Also holds the Day arc: a body `linear-gradient` from `--washi` to `--washi-cool` over the page.
+- `src/assets/`: images, processed by Astro's image pipeline. `src/assets/motifs/` holds the Motif images; their provenance is in the README under `## Artwork`.
+- `public/`: files served as-is, including the PDF resume, `og.png` (the link-preview image) and `favicon.svg` (the Hanko).
 - `tests/`: Playwright specs.
 - `.github/workflows/deploy.yml`: test and deploy pipeline.
 
-Sections, in order: Hero, About, Experience, Skills, Certifications, Education, Outside work, Closing. The Closing section is labelled "Contact", id `contact`, component `Closing.astro`. Still planned in the calm-redesign tickets 07–09 under `.scratch/calm-redesign/issues/`: the margin section index, the Motifs and Day arc, and share-ready polish (OG image, favicon).
+Sections, in order: Hero, About, Experience, Skills, Certifications, Education, Outside work, Closing. The Closing section is labelled "Contact", id `contact`, component `Closing.astro`.
 
 ## Conventions
 
