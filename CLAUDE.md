@@ -23,9 +23,13 @@ Astro 7 backgrounds `astro dev` and `astro preview` when it detects an AI agent.
 
 ## Layout
 
-- `src/data/cv.ts`: typed CV data. The single source of truth for every CV fact.
+- `src/data/cv.ts`: typed CV data. The single source of truth for every CV fact. Exports `cv` (typed as `CV`) and the helpers `contactLinks()`, `resumeLink()` and `hasAssignments()`.
 - `src/layouts/Base.astro`: HTML shell, head and Google Fonts.
-- `src/components/`: one component per section.
+- `src/components/`: one component per section, plus shared pieces:
+    - `Section.astro`: the section wrapper. Takes `id` and `label` and renders the h2.
+    - `Entry.astro`: the entry layout with dates in a left margin on desktop. Used by Experience, Education and Outside work.
+    - `HeroArt.astro`: the hero's SVG Ridges, sun and birds. Each layer is addressable via `data-hero-layer`.
+    - `Hero.astro` also holds the scroll choreography. An inline vanilla script writes scroll progress to `--hero-progress` and adds `html.hero-motion`. Without JS, or with `prefers-reduced-motion`, the hero is static and unpinned.
 - `src/pages/index.astro`: the single page.
 - `src/styles/global.css`: palette and font custom properties.
 - `src/assets/`: images, processed by Astro's image pipeline.
@@ -33,7 +37,7 @@ Astro 7 backgrounds `astro dev` and `astro preview` when it detects an AI agent.
 - `tests/`: Playwright specs.
 - `.github/workflows/deploy.yml`: test and deploy pipeline.
 
-Planned sections, in order: Hero, About, Experience, Skills, Certifications, Education, Outside work, Closing. Only the Hero exists so far. The rest are planned in the calm-redesign tickets under `.scratch/calm-redesign/issues/`.
+Sections, in order: Hero, About, Experience, Skills, Certifications, Education, Outside work, Closing. The Closing section is labelled "Contact", id `contact`, component `Closing.astro`. Still planned in the calm-redesign tickets 07–09 under `.scratch/calm-redesign/issues/`: the margin section index, the Motifs and Day arc, and share-ready polish (OG image, favicon).
 
 ## Conventions
 
@@ -57,6 +61,7 @@ Planned sections, in order: Hero, About, Experience, Skills, Certifications, Edu
 
 - Playwright runs against the production build only, in Chromium.
 - Tests assert only what a visitor sees or does. Never assert on class names, internals or the data module's shape.
+- `tests/sections.spec.ts` holds the section order list (`sectionsAfterHero`). New sections must be added there.
 - There are no unit tests. `npm run check` covers types.
 
 ## Deployment
