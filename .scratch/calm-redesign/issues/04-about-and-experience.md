@@ -4,10 +4,31 @@
 
 **Blocked by:** 01
 
-**Status:** claimed
+**Status:** resolved
 
-- [ ] CV data module extended with About and Employers → Assignments
-- [ ] Employers: Consid 2023–present (Ambea, Bostadsförmedlingen i Stockholm), Capgemini 2022–2023 (Hedin Bil), Visiba Care 2021–2022 (Data Platform Owner role), Capgemini 2018–2021 (Volvo Cars — Configure Your Volvo only)
-- [ ] Dates in left margin on desktop, inline on mobile; no cards, shadows or pills
-- [ ] Portrait shown small and soft-edged, with meaningful alt text
-- [ ] Playwright: sections present in order after the hero; every Employer and Assignment listed newest first; "New Global Function" absent; no horizontal overflow at phone width
+- [x] CV data module extended with About and Employers → Assignments
+- [x] Employers: Consid 2023–present (Ambea, Bostadsförmedlingen i Stockholm), Capgemini 2022–2023 (Hedin Bil), Visiba Care 2021–2022 (Data Platform Owner role), Capgemini 2018–2021 (Volvo Cars — Configure Your Volvo only)
+- [x] Dates in left margin on desktop, inline on mobile; no cards, shadows or pills
+- [x] Portrait shown small and soft-edged, with meaningful alt text
+- [x] Playwright: sections present in order after the hero; every Employer and Assignment listed newest first; "New Global Function" absent; no horizontal overflow at phone width
+
+## Answer
+
+**Built.** About (three first-person sentences plus a small, grayscale, radially masked portrait via `astro:assets`, zoomed to the face) and Experience (four Employers, newest first; Assignments under the three consulting ones; Visiba Care as a single role). Experience text is the PDF wording plus one or two details per Assignment from the legacy site (Ambea: SQL Server metadata database; Bostadsförmedlingen: Inmon/Kimball, Power BI Report Server; Hedin Bil: DevOps alongside; Visiba: T-SQL/Tabular Editor, workshops; Volvo: legacy backend, sparse documentation).
+
+**Reusable pieces for tickets 05/06/07:**
+- `src/components/Section.astro`: `id` + `label`, renders `<section id aria-labelledby>` with an h2 letter-spaced uppercase label in one narrow column.
+- `src/components/Entry.astro`: `dates?`, `title` (h3), `meta?` (grey line) and a slot. Dates hang in the left margin from 60rem up, inline above the entry below that. Education, Certifications and Outside work can use it directly.
+- `src/data/cv.ts`: `about`, `employers` (`ConsultingEmployer | InHouseEmployer`, so an Employer has Assignments or a single role, never both) and `hasAssignments()`.
+- `tests/sections.spec.ts`: append new section labels to `sectionsAfterHero`. The anchor id is the lowercased, hyphenated label, so "Outside work" must use id `outside-work`.
+
+**Deviations / judgement calls**
+- Volvo Cars has no technologies, so its grey line holds the legacy tags ("Tech lead · Global rollout · Stakeholder management") to keep the rhythm. Say if you'd rather omit it.
+- Hero is still a `<header>` with no id; I wrapped the new sections in `<main>` in `index.astro` (small merge surface with ticket 02). The margin index (07) will need an anchor for the hero.
+- The branch was created from the legacy commit, so I fast-forwarded it to `redesign` before starting.
+- Tests ran on PW_PORT=4351 because another worktree was already listening on 4341.
+
+**Needs a human eye**
+- Portrait: a faint grey vignette halo remains where the dark photo background fades into the washi; judge whether it reads as ink wash or as a smudge.
+- Date alignment against the serif Employer title in the left margin.
+- The gap between the 100svh hero and About is just the hero's own height; tickets 02/03 will change it.

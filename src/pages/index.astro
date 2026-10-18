@@ -1,9 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
 import { cv } from '../data/cv';
 ---
 
 <Base title={`${cv.name} — ${cv.title}`} description={cv.summary}>
     <Hero />
+    <main>
+        <About />
+        <Experience />
+    </main>
 </Base>

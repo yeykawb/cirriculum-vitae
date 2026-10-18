@@ -1,0 +1,52 @@
+---
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import { cv, hasAssignments } from '../data/cv';
+---
+
+<Section id="experience" label="Experience">
+    {
+        cv.employers.map((employer) => (
+            <Entry dates={employer.period} title={employer.name} meta={employer.title}>
+                {hasAssignments(employer) ? (
+                    employer.assignments.map((assignment) => (
+                        <div class="work">
+                            <h4 class="work-title">{assignment.client}</h4>
+                            <p class="work-text">{assignment.description}</p>
+                            <p class="work-tech">{assignment.tech.join(' · ')}</p>
+                        </div>
+                    ))
+                ) : (
+                    <div class="work">
+                        <p class="work-text">{employer.role.description}</p>
+                        <p class="work-tech">{employer.role.tech.join(' · ')}</p>
+                    </div>
+                )}
+            </Entry>
+        ))
+    }
+</Section>
+
+<style>
+    .work + .work {
+        margin-top: 2rem;
+    }
+
+    .work-title {
+        margin: 0 0 0.4rem;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--ink);
+    }
+
+    .work-text {
+        margin: 0;
+    }
+
+    .work-tech {
+        margin: 0.6rem 0 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--grey);
+    }
+</style>

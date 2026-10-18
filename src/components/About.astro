@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import portrait from '../assets/portrait.jpg';
+import { cv } from '../data/cv';
+---
+
+<Section id="about" label="About">
+    <div class="about">
+        <div class="about-portrait">
+            <Image
+                src={portrait}
+                width={400}
+                height={400}
+                format="webp"
+                loading="lazy"
+                alt="Black-and-white portrait of Jakob Agelin, looking straight at the camera"
+            />
+        </div>
+        <p class="about-text">{cv.about}</p>
+    </div>
+</Section>
+
+<style>
+    .about {
+        display: grid;
+        gap: 1.75rem;
+        align-items: center;
+    }
+
+    .about-text {
+        margin: 0;
+        line-height: 1.75;
+    }
+
+    /* Black and white, zoomed to the face, the dark backdrop dissolving into the washi. */
+    .about-portrait {
+        width: 8rem;
+        height: 8rem;
+        overflow: hidden;
+        -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+        mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+    }
+
+    .about-portrait :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.35);
+        transform-origin: 50% 30%;
+        filter: grayscale(1);
+        opacity: 0.9;
+    }
+
+    @media (min-width: 36rem) {
+        .about {
+            grid-template-columns: 8rem 1fr;
+            gap: 2rem;
+        }
+    }
+</style>
