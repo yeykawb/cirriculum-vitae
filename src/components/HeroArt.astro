@@ -6,7 +6,7 @@
 // Every layer is its own <svg> so each can be transformed independently
 // (ticket 03): [data-hero-layer="ridge-1" … "ridge-4" | "sun" | "birds"].
 // Stacking order (z-index, back to front): ridge-1, sun, ridge-2, ridge-3,
-// ridge-4, birds. The sun sits partly behind ridge-2. On phones ridge-1 is dropped.
+// ridge-4, birds (the veil, z 5, sits under ridge-4). The sun sits partly behind ridge-2. On phones ridge-1 is dropped.
 
 // Ridges are listed back (faintest) to front (strongest wash).
 const ridges = [
@@ -38,7 +38,7 @@ const ridges = [
         layer: 'ridge-4',
         x0: 236,
         x1: 830,
-        z: 5,
+        z: 6,
         // Drawn strong; Hero.astro holds the layer pale at rest and brings it up as it rises.
         opacity: 0.7,
         d: 'M236 842 C262 832 276 829 296 826 C348 812 404 814 450 822 C500 830 560 832 620 824 C676 817 722 818 770 828 C792 832 812 838 830 846 L830 920 L236 920 Z',
@@ -119,7 +119,7 @@ const downPose =
         </svg>
     </div>
 
-    <svg class="art-layer" data-hero-layer="birds" style="z-index: 6" viewBox="0 0 1000 1000" focusable="false">
+    <svg class="art-layer" data-hero-layer="birds" style="z-index: 7" viewBox="0 0 1000 1000" focusable="false">
         {
             birds.map((bird) => (
                 <g

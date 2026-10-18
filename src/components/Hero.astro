@@ -122,7 +122,7 @@ const lines = [
     :global(html.hero-motion) .hero ~ :global(main) {
         position: relative;
         z-index: 1;
-        margin-top: -50svh;
+        margin-top: -79svh;
     }
 
     /* The stage is the Ensō image square. The PDF leaves a tenth of padding
@@ -203,8 +203,10 @@ const lines = [
         margin: 0;
     }
 
-    /* The veil is plain washi, misty at its top edge, that rises behind the
-       front Ridge until it fills the screen. It is the paper About sits on. */
+    /* The veil is the body of the front Ridge: plain washi that turns opaque a
+       short way under the crest and rises with it, so everything below the
+       crest is put away. It is the paper About sits on. Sized in stage units
+       (cqi), so the crest and the veil stay together at any size. */
     .hero-veil {
         position: absolute;
         inset: 0;
@@ -217,13 +219,13 @@ const lines = [
         position: absolute;
         left: -200vw;
         right: -200vw;
-        top: 150%;
+        top: 81%;
         height: 400%;
         background: linear-gradient(
             to bottom,
             color-mix(in srgb, var(--washi) 0%, transparent) 0,
-            color-mix(in srgb, var(--washi) 55%, transparent) 4%,
-            var(--washi) 9%
+            color-mix(in srgb, var(--washi) 60%, transparent) 3.5cqi,
+            var(--washi) 9cqi
         );
     }
 
@@ -234,8 +236,7 @@ const lines = [
         --ridge-1-travel: 12%;
         --ridge-2-travel: 30%;
         --ridge-3-travel: 55%;
-        --ridge-4-travel: 110%;
-        --veil-travel: 210%;
+        --ridge-4-travel: 100%;
         --sun-sink: 10%;
         --bird-run-x: 95%;
         --bird-run-y: 95%;
@@ -281,7 +282,10 @@ const lines = [
     }
 
     :global(html.hero-motion) .hero-veil {
-        transform: translateY(calc(var(--hero-progress) * var(--veil-travel) * -1));
+        /* Moves with the front Ridge; only fades in over the first stretch so
+           the rest composition stays as on the PDF. */
+        transform: translateY(calc(var(--hero-progress) * var(--ridge-4-travel) * -1));
+        opacity: min(1, calc(var(--hero-progress) * 8));
     }
 
     :global(html.hero-motion) .hero-stage :global(.hero-enso) {
@@ -302,11 +306,11 @@ const lines = [
 
         :global(html.hero-motion) .hero {
             height: 200svh;
-            --veil-travel: 250%;
+            --ridge-4-travel: 125%;
         }
 
         :global(html.hero-motion) .hero ~ :global(main) {
-            margin-top: -40svh;
+            margin-top: -79svh;
         }
 
         .hero-stage :global(.hero-art) {

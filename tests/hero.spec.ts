@@ -219,11 +219,25 @@ test.describe('scrolling through the hero', () => {
         const about = page.getByRole('heading', { level: 2, name: 'About' });
         const atEnd = await about.boundingBox();
         expect(atEnd).not.toBeNull();
-        // Already on screen, not a whole empty screen further down.
-        expect(atEnd!.y).toBeLessThan(viewport.height * 0.8);
+        // Already on screen, in the upper part of the screen, not after a blank page.
+        expect(atEnd!.y).toBeGreaterThan(viewport.height * 0.2);
+        expect(atEnd!.y).toBeLessThan(viewport.height * 0.4);
 
-        await page.evaluate((h) => window.scrollBy(0, h * 0.5), viewport.height);
+        await page.evaluate((h) => window.scrollBy(0, h * 0.1), viewport.height);
         await expect(about).toBeInViewport();
+    });
+
+    test('the front Ridge puts the name away by the end of the pin', async ({ page }) => {
+        const name = page.getByRole('heading', { level: 1 });
+        const look = async () => {
+            const box = (await name.boundingBox())!;
+            return (await page.screenshot({ clip: box })).length;
+        };
+        const atTop = await look();
+        await scrollToProgress(page, 1);
+        // Where the name stood is plain paper: a flat colour compresses to almost nothing.
+        expect(await look()).toBeLessThan(atTop / 2);
+        expect(await look()).toBeLessThan(1_500);
     });
 
     test('the name stays put while the hero is scrolled through', async ({ page }) => {

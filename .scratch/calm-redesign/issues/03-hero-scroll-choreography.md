@@ -35,3 +35,9 @@
 - Ridge-4's blue-grey crest sliding across the summary text at about a third of the pin (the busiest moment).
 - Veil speed and the length of blank paper before About.
 - Screenshots: `/tmp/cv-shots/w3-03-{desktop,phone}-{0-top,1-third,1b-half,2-twothirds,3-end,4-after}.png`.
+
+**Review follow-up**
+- The `.hero-veil` is now the body of the front Ridge: it moves with ridge-4 (same travel) and turns from clear to opaque washi over about 9% of the stage under the crest, so the crest drags a sheet of paper up and puts away everything below it, bottom-up. It fades in over the first ~12% of progress so the rest composition is unchanged. ridge-4 now sits above the veil (z 6; birds 7) so the grey crest wash stays visible on the paper. Front Ridge travel is 100% of the stage on desktop and 125% on phones, enough to leave plain washi at the end of the pin.
+- Hand-off: `.hero ~ main` margin-top is `-79svh` on both sizes. At the end of the pin the About label sits at about 29% of the viewport height (261 of 900; 249 of 844). About's top stays below the opaque part of the veil throughout.
+- Tests: About label lands at 20-40% of the viewport; the name's area is flat paper at the end of the pin.
+- Screenshots: `/tmp/cv-shots/w3-03b-{desktop,phone}-{p0,p33,p50,p66,p100,after}.png`.
