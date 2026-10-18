@@ -50,7 +50,7 @@ The site is rebuilt in Astro and published to the same GitHub Pages URL through 
 
 23. As a recruiter, I want an About section of 2–3 short first-person sentences, so that I get who Jakob is in seconds.
 24. As a hiring manager, I want About to convey that he learns in conversation, cares about work being understood and is curious about where the field is going (e.g. DuckDB and single-machine compute), so that I get a sense of him as a colleague.
-25. As a recruiter, I want Jakob's black-and-white portrait shown small and soft-edged, blended into the paper, so that I can put a face to the name without a hard framed photo breaking the mood.
+25. ~~As a recruiter, I want Jakob's black-and-white portrait shown small and soft-edged, blended into the paper, so that I can put a face to the name without a hard framed photo breaking the mood.~~ Dropped 2026-10-18: Jakob found the portrait didn't fit the page.
 
 ### Experience
 
@@ -124,7 +124,7 @@ The site is rebuilt in Astro and published to the same GitHub Pages URL through 
 ## Implementation Decisions
 
 - **Stack:** Astro with static output, no UI framework, TypeScript with Astro's default strict settings, npm as the package manager. The old "no build step" rule is superseded by ADR-0001. Local development needs Node 24 LTS; the machine currently has Node 12, so the first step is installing nvm and Node 24.
-- **Legacy removal:** the old vanilla site (single HTML file, its stylesheet, `main.js`, `theme.js`, `hero3d.js`, `arch-renderer.js`), Three.js, Rough.js, the Virgil font and Font Awesome are all removed. Commit `dbdc7b3` is the last legacy version. The portrait (`cv26.jpg`) and the PDF resume move into the Astro project.
+- **Legacy removal:** the old vanilla site (single HTML file, its stylesheet, `main.js`, `theme.js`, `hero3d.js`, `arch-renderer.js`), Three.js, Rough.js, the Virgil font and Font Awesome are all removed. Commit `dbdc7b3` is the last legacy version. The PDF resume moves into the Astro project.
 - **Deploy:** a GitHub Actions workflow using the official Astro action publishes to GitHub Pages. The site base path stays `/cirriculum-vitae` so the URL `https://yeykawb.github.io/cirriculum-vitae/` is unchanged. Jakob switches the Pages source to "GitHub Actions" only at merge time; doing it earlier would take the live site down.
 - **Branch:** all work happens on a `redesign` branch; `main` stays live and untouched until merge.
 - **CV data module:** one typed module is the single source of truth for every CV fact. Rough shape: title; summary; contact (email `yeykawb@proton.me`, phone `+46 73 232 73 73`, LinkedIn, GitHub, location Mölnlycke); about (2–3 sentences); Employers in reverse chronological order, each with a name, period and either a list of Assignments (client, short description, one-line tech list) or a single role description; skill groups (Platform, Delivery, Data, Practice), each a list; certification groups (Data & Engineering, Process & Methodology), each certification with name, issuer and month/year; education; Outside work (interests with a sentence each, and portfolio projects with description and links). Components never hard-code CV text.
