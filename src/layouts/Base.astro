@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { cv } from '../data/cv';
 
 interface Props {
     title: string;
@@ -13,7 +14,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const absolute = (path: string) => new URL(`${base}${path}`, Astro.site).href;
 const canonical = absolute('/');
 const image = absolute('/og.png');
-const imageAlt = 'Ink-wash Ridges under a vermilion sun, with the name Jakob Agelin.';
+const imageAlt = `Ink-wash Ridges under a vermilion sun, with the name ${cv.name}.`;
 const favicon = `${base}/favicon.svg`;
 ---
 
