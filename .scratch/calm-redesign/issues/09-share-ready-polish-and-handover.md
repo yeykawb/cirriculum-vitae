@@ -4,7 +4,7 @@
 
 **Blocked by:** 03, 07, 08
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] Title, meta description, OG/Twitter card with static hero image (absolute URLs under the base path)
 - [ ] Hanko favicon
