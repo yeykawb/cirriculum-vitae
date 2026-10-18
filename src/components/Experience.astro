@@ -1,6 +1,7 @@
 ---
 import Section from './Section.astro';
 import Entry from './Entry.astro';
+import Motif from './Motif.astro';
 import { cv, hasAssignments } from '../data/cv';
 import type { Assignment, Employer, Work } from '../data/cv';
 
@@ -11,6 +12,7 @@ function workOf(employer: Employer): (Work & Partial<Pick<Assignment, 'client'>>
 ---
 
 <Section id="experience" label="Experience">
+    <Motif name="pine" />
     {
         cv.employers.map((employer) => (
             <Entry dates={employer.period} title={employer.name} meta={employer.position}>

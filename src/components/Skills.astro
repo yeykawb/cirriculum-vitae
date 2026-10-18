@@ -1,9 +1,11 @@
 ---
 import Section from './Section.astro';
+import Motif from './Motif.astro';
 import { cv } from '../data/cv';
 ---
 
 <Section id="skills" label="Skills">
+    <Motif name="bamboo" />
     <dl class="skills">
         {
             cv.skills.map((group) => (
