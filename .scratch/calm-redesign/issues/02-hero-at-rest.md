@@ -24,7 +24,7 @@
 - Tests added to `tests/hero.spec.ts`: PDF link resolves (200, PDF) under the base path; all images load; no `img` role in the accessibility tree; phone width has no horizontal overflow and hero text stays on screen.
 
 **Deviations**
-- On phones the Ensō image is stretched to a 4:5 box (about 1.25× taller than wide); the art stays square and anchored at the bottom. A square circle that fits a 390 px screen is too small to hold the summary and contact lines, so without this the text overran the stroke. The stretch is mild but distorts the PDF's brush; it is the first thing to look at.
+- On phones the Ensō stays square but the stage is 140vw wide, centred, so the left and right strokes bleed off-screen and the hero clips them (no horizontal overflow). The inner circle is then large enough for the summary and contact lines. Phone-only tweaks: slightly smaller summary, tighter spacing, text block raised, art layer box nudged down 1.5%. Checked at 390x844 and 360x740. An earlier 4:5 stretched Ensō was dropped because it turned the brush into an oval.
 - The hero is exactly `100svh` tall (not `min-height`), with the stage clipped by `overflow: clip`. Ticket 03 owns pinning.
 
 **For other tickets**
@@ -33,6 +33,6 @@
 
 **Needs a human eye**
 - Sun and Ridges are my own paths matched to the PDF's layout, not traced; compare the Ridge silhouettes and the sun's size to the PDF.
-- The mobile Ensō stretch (above).
+- How much of the left and right strokes bleed off-screen on phones.
 - Hanko size (about 24 px on desktop, 18 px on phone) and the "JA" letter drawing.
 - Screenshots: `/tmp/hero-desktop-final.png` (1440×900), `/tmp/hero-phone-final.png` (390×844).

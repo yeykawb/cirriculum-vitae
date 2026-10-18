@@ -23,7 +23,7 @@ const lines = [
             alt=""
             aria-hidden="true"
             widths={[640, 960, 1280, 1600]}
-            sizes="(max-width: 40rem) 124vw, min(124vw, 106svh)"
+            sizes="(max-width: 40rem) 140vw, min(124vw, 106svh)"
             format="webp"
             loading="eager"
             fetchpriority="high"
@@ -141,11 +141,31 @@ const lines = [
         margin: 0;
     }
 
-    /* On a phone the circle is too small to hold the text, so the Ensō is
-       stretched taller; the art stays square, anchored to the bottom. */
+    /* On a phone the stage is wider than the screen so the inner circle can
+       hold the text. The left and right strokes bleed off the edges and the
+       hero clips them. The Ensō stays square. */
     @media (max-width: 40rem) {
         .hero-stage {
-            aspect-ratio: 4 / 5;
+            width: 140vw;
+        }
+
+        .hero-stage :global(.hero-art) {
+            transform: translateY(1.5%);
+        }
+
+        .hero-intro {
+            top: 44.5%;
+        }
+
+        .hero-summary {
+            margin-top: 1.4em;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .hero-contact {
+            margin-top: 1.1em;
+            line-height: 1.7;
         }
     }
 </style>
