@@ -22,13 +22,6 @@ test('About says he learns in conversation, cares about understood work and foll
     await expect(about).toContainText('DuckDB');
 });
 
-test('the portrait is shown small, with alt text, and loads', async ({ page }) => {
-    const portrait = page.locator('#about').getByRole('img', { name: /Jakob Agelin/ });
-    await portrait.scrollIntoViewIfNeeded();
-    await expect(portrait).toBeVisible();
-    await expect
-        .poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth))
-        .toBeGreaterThan(0);
-    const box = await portrait.boundingBox();
-    expect(box!.width).toBeLessThanOrEqual(240);
+test('About is text only, with no photograph', async ({ page }) => {
+    await expect(page.locator('#about').getByRole('img')).toHaveCount(0);
 });

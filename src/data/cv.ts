@@ -105,8 +105,6 @@ export interface CV {
     summary: string;
     contact: Contact;
     about: string;
-    /** Alt text for the About portrait. */
-    portraitAlt: string;
     /** Newest first. */
     employers: Employer[];
     skills: SkillGroup[];
@@ -139,7 +137,6 @@ export const cv: CV = {
         'time because I enjoy it. I care about work being understood, not just delivered. ' +
         "I'm curious where the field is going, DuckDB and cheap single-machine compute " +
         'especially, and whether they will change how we think about distributed analytics.',
-    portraitAlt: 'Black-and-white portrait of Jakob Agelin, looking straight at the camera',
     employers: [
         {
             name: 'Consid',
