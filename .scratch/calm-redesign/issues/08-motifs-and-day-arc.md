@@ -16,7 +16,7 @@
 
 ## Answer
 
-Built a shared `Motif.astro` (four named Motifs, all placement in its styles) mounted inside Experience (Aged Pine), Skills (Bamboo, running down into Certifications), OutsideWork (geese) and Closing (Moonlit Landscape, with bottom room added to the Closing section). Art was cropped once with sharp: flat-field paper correction, edge feather, then exported as one ink tone with alpha = darkness (WebP, <= 1600px), so no blend mode is needed. Day arc: `--washi` held to 300svh, then a gradient to `--washi-cool` (#e9ebea) on the body; hero veil pixel-checked at 241,236,227 mid- and end-pin.
+Built a shared `Motif.astro` (four named Motifs, all placement in its styles) mounted inside Experience (Aged Pine), Skills (Bamboo, running down into Certifications), OutsideWork (geese) and Closing (Moonlit Landscape, with bottom room added to the Closing section). Art was cropped once with sharp: flat-field paper correction, edge feather, then exported as one ink tone with alpha = darkness (WebP, <= 1600px), so no blend mode is needed. Day arc: `--washi` held to 300svh, then a gradient to `--washi-cool` (#eeebe5) on the body; hero veil pixel-checked at 241,236,227 mid- and end-pin.
 
 Deviations and notes:
 - `mix-blend-mode: multiply` did not work: `<main>` is a stacking context (z-index 1, from the hero) and isolates the blend. Hence the alpha-ink assets.

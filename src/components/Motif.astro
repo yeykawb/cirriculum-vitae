@@ -2,8 +2,9 @@
 // A Motif: a faded fragment of a CC0 artwork (provenance in the README, never on the page).
 // The image is ink only: one ink tone with the paper knocked out into transparency (alpha is the
 // darkness of the painting), so only the brushwork lands on the Washi. (A multiply blend would be
-// the other way, but <main> is its own stacking context and would isolate it.) Motifs sit in margins and corners, never under text, are hidden from
-// assistive tech and load lazily. The parent Section is the positioning context.
+// the other way, but <main> is its own stacking context and would isolate it.) Motifs sit in
+// margins and corners, never under text, are hidden from assistive tech and load lazily. The
+// parent Section is the positioning context.
 import { Image } from 'astro:assets';
 import pine from '../assets/motifs/aged-pine.webp';
 import bamboo from '../assets/motifs/bamboo.webp';
@@ -71,7 +72,8 @@ const widths = { pine: [320, 480], bamboo: [320, 480], geese: [400, 640, 800], m
     .motif-moon {
         left: 50%;
         bottom: 0;
-        width: min(100vw, 56rem);
+        /* Set by Closing, which also keeps the room below its content. */
+        width: var(--moon-width);
         translate: -50% 0;
         opacity: 0.55;
     }

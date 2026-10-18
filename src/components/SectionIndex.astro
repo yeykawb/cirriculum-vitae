@@ -26,20 +26,26 @@ const items = [
 </nav>
 
 <script>
-    // A section counts as reached once it enters the top half of the viewport, and stays
-    // reached once it has scrolled past. The current section is the last one reached; the
-    // index appears when the first one is. No scroll listeners.
+    // A section counts as reached once its top is in the top half of the viewport. The current
+    // section is the last one reached; the index appears when the first one is. The observers
+    // only say when to look again: a jump can skip a section without it ever crossing, so each
+    // look reads where every section is now. No scroll listeners.
     const nav = document.querySelector<HTMLElement>('.section-index');
     if (nav) {
         const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a'));
-        const reached = new Map<string, boolean>();
-        let seenEnd = false;
+        const sections = links.map((link) => document.getElementById(link.hash.slice(1)));
+        const last = sections[sections.length - 1];
 
         const update = () => {
+            const middle = window.innerHeight / 2;
             let current: HTMLAnchorElement | undefined;
-            for (const link of links) {
-                const id = link.hash.slice(1);
-                if (reached.get(id) || (seenEnd && link === links[links.length - 1])) current = link;
+            sections.forEach((section, i) => {
+                if (section && section.getBoundingClientRect().top < middle) current = links[i];
+            });
+            // The last section is short, so at the end of the page it may never reach the top
+            // half. Seeing all of it counts as reaching it.
+            if (last && last.getBoundingClientRect().bottom <= window.innerHeight + 1) {
+                current = links[links.length - 1];
             }
             nav.classList.toggle('is-shown', current !== undefined);
             for (const link of links) {
@@ -48,35 +54,11 @@ const items = [
             }
         };
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    reached.set(
-                        entry.target.id,
-                        entry.isIntersecting || entry.boundingClientRect.top < 0,
-                    );
-                }
-                update();
-            },
-            { rootMargin: '0px 0px -50% 0px' },
-        );
-        for (const link of links) {
-            const section = document.getElementById(link.hash.slice(1));
-            if (section) observer.observe(section);
+        const crossings = new IntersectionObserver(update, { rootMargin: '0px 0px -50% 0px' });
+        for (const section of sections) {
+            if (section) crossings.observe(section);
         }
-
-        // The last section is short, so at the end of the page it may never reach the top
-        // half. Seeing all of it counts as reaching it.
-        const last = document.getElementById(links[links.length - 1].hash.slice(1));
-        if (last) {
-            new IntersectionObserver(
-                ([entry]) => {
-                    seenEnd = entry.intersectionRatio >= 0.99;
-                    update();
-                },
-                { threshold: [0, 0.99] },
-            ).observe(last);
-        }
+        if (last) new IntersectionObserver(update, { threshold: [0, 0.99, 1] }).observe(last);
     }
 </script>
 

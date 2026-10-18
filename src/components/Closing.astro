@@ -29,9 +29,18 @@ const lines = [[email, phone], [linkedin, github], [resume]];
 </Section>
 
 <style>
-    /* Room below the content for the moonlit Motif: the landscape is about 3 times wider than tall. */
+    /* The moonlit Motif's width, and room below the content for it: the landscape is about
+       3 times wider than tall. On wide screens it stays clear of the margin index (the
+       rightmost 14rem). */
     :global(#contact) {
-        padding-bottom: calc(1.5rem + min(100vw, 56rem) / 3);
+        --moon-width: min(100vw, 56rem);
+        padding-bottom: calc(1.5rem + var(--moon-width) / 3);
+    }
+
+    @media (min-width: 64rem) {
+        :global(#contact) {
+            --moon-width: min(56rem, 100vw - 28rem);
+        }
     }
 
     .closing-line {

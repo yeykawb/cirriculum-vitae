@@ -50,6 +50,17 @@ test('the highlight follows the visitor to another section', async ({ page }) =>
     await expect(entry(page, 'Skills')).not.toHaveAttribute('aria-current', /.*/);
 });
 
+test('the highlight steps back when the visitor goes back up', async ({ page }) => {
+    await reachAbout(page);
+    await entry(page, 'Contact').click();
+    await expect(entry(page, 'Contact')).toHaveAttribute('aria-current', 'location');
+    await entry(page, 'Experience').click();
+    await expect(entry(page, 'Experience')).toHaveAttribute('aria-current', 'location');
+    await page.mouse.wheel(0, -700);
+    await expect(entry(page, 'About')).toHaveAttribute('aria-current', 'location');
+    await expect(index(page).locator('[aria-current]')).toHaveCount(1);
+});
+
 test('the last entry can be reached at the end of the page', async ({ page }) => {
     await reachAbout(page);
     await entry(page, 'Contact').click();
