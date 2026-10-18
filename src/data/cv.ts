@@ -42,6 +42,32 @@ export interface InHouseEmployer extends EmployerBase {
 
 export type Employer = ConsultingEmployer | InHouseEmployer;
 
+/** One group of skills, named as on the PDF (Platform, Delivery, Data, Practice). */
+export interface SkillGroup {
+    name: string;
+    items: string[];
+}
+
+export interface Certification {
+    name: string;
+    issuer: string;
+    /** As displayed, e.g. "Nov 2025". */
+    date: string;
+}
+
+/** Certifications under one heading, e.g. "Data & Engineering". */
+export interface CertificationGroup {
+    name: string;
+    certifications: Certification[];
+}
+
+export interface Education {
+    school: string;
+    degree: string;
+    /** As displayed, e.g. "2015 – 2018". */
+    period: string;
+}
+
 export interface Resume {
     /** Link text for the print version. */
     label: string;
@@ -59,6 +85,10 @@ export interface CV {
     portraitAlt: string;
     /** Newest first. */
     employers: Employer[];
+    skills: SkillGroup[];
+    /** In display order. */
+    certifications: CertificationGroup[];
+    education: Education;
     resume: Resume;
 }
 
@@ -170,6 +200,54 @@ export const cv: CV = {
             ],
         },
     ],
+    skills: [
+        {
+            name: 'Platform',
+            items: ['Azure', 'Databricks (Unity Catalog, Lakeflow Jobs)', 'Data Factory', 'SQL Server'],
+        },
+        {
+            name: 'Delivery',
+            items: ['Terraform', 'Azure DevOps', 'Git', 'YAML CI/CD', 'Docker'],
+        },
+        {
+            name: 'Data',
+            items: ['SQL', 'Python', 'PySpark', 'T-SQL', 'dbt Cloud', 'dbt Mesh', 'DAX', 'Power BI'],
+        },
+        {
+            name: 'Practice',
+            items: [
+                'Medallion architecture',
+                'Kimball',
+                'data governance',
+                'data quality',
+                'AI-assisted development',
+            ],
+        },
+    ],
+    certifications: [
+        {
+            name: 'Data & Engineering',
+            certifications: [
+                { name: 'dbt Developer', issuer: 'dbt Labs', date: 'Nov 2025' },
+                { name: 'Data Engineer Associate', issuer: 'Databricks', date: 'Nov 2023' },
+                { name: 'Spark 3.0 Associate Developer', issuer: 'Databricks', date: 'Feb 2023' },
+                { name: 'Azure Data Engineer Associate', issuer: 'Microsoft', date: 'Nov 2022' },
+            ],
+        },
+        {
+            name: 'Process & Methodology',
+            certifications: [
+                { name: 'SAFe 5 Agilist', issuer: 'Scaled Agile', date: 'Dec 2020' },
+                { name: 'CPRE Foundation Level', issuer: 'IREB', date: 'Nov 2018' },
+                { name: 'Professional Scrum Master I', issuer: 'Scrum.org', date: 'Sep 2018' },
+            ],
+        },
+    ],
+    education: {
+        school: 'Göteborgs Universitet',
+        degree: 'BSc Systems Science, IT, Human and Organisation',
+        period: '2015 – 2018',
+    },
     resume: {
         label: 'Download PDF resume',
         file: 'Jakob_Agelin_Resume.pdf',
