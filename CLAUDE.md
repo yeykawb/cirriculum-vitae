@@ -1,44 +1,51 @@
 # CV Website — Jakob Agelin
 
-Personal CV/portfolio site for Jakob Agelin, Data Engineer based in Mölnlycke, Sweden.
+Personal CV site for Jakob Agelin, Data Platform Engineer based in Mölnlycke, Sweden. Published as a static site at https://yeykawb.github.io/cirriculum-vitae/.
 
-## Project
+The redesign is specified in `.scratch/calm-redesign/spec.md`. Architecture decisions are in `docs/adr/`. Vocabulary is in `GLOSSARY.md`.
 
-Static single-page website. No build tool, no framework, no package manager. Everything is plain HTML, CSS, and vanilla JS served directly from the filesystem or a static host.
+## Stack
 
-## File Structure
+- Astro 7, static output. TypeScript with Astro's strict tsconfig. npm.
+- Node 24, pinned in `.nvmrc`. nvm is not loaded by the shell profile, so run `source ~/.nvm/nvm.sh` first in every new shell.
+- Base path `/cirriculum-vitae` (set in `astro.config.mjs`).
+- Playwright (Chromium) for end-to-end tests.
 
-```
-index.html          # Single page, all sections inline
-assets/
-  css/style.css     # All styles
-  js/main.js        # Interactions: typed text, scroll effects, contact form, back-to-top
-  js/theme.js       # Dark/light mode toggle and persistence
-  js/hero3d.js      # Three.js particle network for hero section background
-  media/            # Images (cv-image.jpeg)
-```
+## Commands
 
-## Sections (in order)
+- `npm run dev`: dev server.
+- `npm run build`: static build to `dist/`.
+- `npm run preview`: serve `dist/`.
+- `npm run check`: `astro check` (types).
+- `npm test`: builds, then runs Playwright against the production build, served on `PW_PORT` (default 4322). Use a different `PW_PORT` per worktree when running suites in parallel.
 
-1. Hero — name, typed role subtitle, CTA buttons
-2. About — bio, skill pills, radar pills
-3. Experience — project cards grouped by employer/period
-4. Certifications — two categories: Data & Engineering, Process & Methodology
-5. Education — Göteborgs Universitet BSc
-6. Interests — Ice Cream Science, Sourdough Baking
-7. Contact — contact info + form
+Astro 7 backgrounds `astro dev` and `astro preview` when it detects an AI agent. For a foreground server, pass `--ignore-lock`. To stop a background server, run `npx astro dev stop` or `npx astro preview stop`.
+
+## Layout
+
+- `src/data/cv.ts`: typed CV data. The single source of truth for every CV fact.
+- `src/layouts/Base.astro`: HTML shell, head and Google Fonts.
+- `src/components/`: one component per section.
+- `src/pages/index.astro`: the single page.
+- `src/styles/global.css`: palette and font custom properties.
+- `src/assets/`: images, processed by Astro's image pipeline.
+- `public/`: files served as-is, including the PDF resume.
+- `tests/`: Playwright specs.
+- `.github/workflows/deploy.yml`: test and deploy pipeline.
+
+Planned sections, in order: Hero, About, Experience, Skills, Certifications, Education, Outside work, Closing. Only the Hero exists so far. The rest are planned in the calm-redesign tickets under `.scratch/calm-redesign/issues/`.
 
 ## Conventions
 
-- Indentation: 4 spaces
-- CSS classes use kebab-case
-- Dark mode is the default (`class="dark-mode"` on `<body>`)
-- Font Awesome 6.4.0 loaded from CDN for icons
-- No JavaScript frameworks (no jQuery, no React, etc.)
-- No external CSS frameworks (no Bootstrap, no Tailwind)
-- Three.js (r134, CDN) is approved for the hero section particle network
-- Rough.js v4.6.6 (unpkg CDN) is approved for architecture diagrams — lazy-loaded via arch-renderer.js
-- Virgil font (excalidraw.com CDN) loaded via @font-face for the hand-drawn diagram aesthetic
+- 4-space indentation. CSS classes in kebab-case.
+- Components render CV facts from `src/data/cv.ts`. Never hard-code CV text in a component.
+- Use the glossary terms (Employer, Assignment, Ensō, Ridge, Motif, Day arc, Hanko, Washi) in code and docs.
+- Vermilion is used only for the sun and the Hanko.
+- Light washi only. No dark mode, no theme toggle, no `prefers-color-scheme`.
+- Vanilla JS only. No JS or UI frameworks, no CSS frameworks, no animation or smooth-scroll libraries.
+- Google Fonts (Noto Serif JP, Inter) is the only third-party resource. No analytics, no cookies.
+- Don't add new files unless clearly necessary.
+- Calmness is the acceptance criterion. When in doubt, remove rather than add.
 
 ## Tone & Content
 
@@ -46,16 +53,16 @@ assets/
 - Technical depth is valued over buzzwords
 - Content reflects genuine interests and experience, not a polished marketing pitch
 
+## Testing
+
+- Playwright runs against the production build only, in Chromium.
+- Tests assert only what a visitor sees or does. Never assert on class names, internals or the data module's shape.
+- There are no unit tests. `npm run check` covers types.
+
 ## Deployment
 
-Hosted as a static site (GitHub Pages or similar). Push to `main` branch to deploy.
-
-## Do Not
-
-- Add build steps, package.json, or bundlers
-- Add JS libraries or frameworks without a clear visual/functional purpose
-- Introduce external dependencies beyond Font Awesome and Three.js
-- Create new files unless clearly necessary
+- `.github/workflows/deploy.yml` runs on pushes to `main`, on pull requests and on manual dispatch. The `test` job runs `npm ci`, `npm run check` and `npm test`. On pushes to `main`, the `build` job (withastro/action) and the `deploy` job (actions/deploy-pages) publish to GitHub Pages.
+- The Pages source must be switched to "GitHub Actions" at merge. This is not yet done. Until then, work stays on the `redesign` branch and `main` stays live.
 
 ## Agent skills
 
