@@ -11,9 +11,9 @@
 - [x] Logical heading order; contrast meets guidelines; all interactive elements keyboard-reachable with visible focus
 - [x] With JavaScript disabled, all CV content readable in final resting layout
 - [x] No analytics, cookies or third-party scripts beyond Google Fonts
-- [ ] README: local dev, test and deploy instructions — done by the `docs-writer` agent after the code lands, not by the implementer
+- [x] README: local dev, test and deploy instructions — done by the `docs-writer` agent after the code lands, not by the implementer
 - [x] Playwright: meta tags present; full content visible with JS disabled; heading structure valid; zero console errors over a full scroll
-- [ ] Merge checklist delivered to Jakob: switch Pages source to "GitHub Actions", then merge `redesign` into `main`
+- [x] Merge checklist delivered to Jakob: switch Pages source to "GitHub Actions", then merge `redesign` into `main`
 
 ## Answer
 
