@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('the page loads with no console errors or failed requests', async ({ page }) => {
+test('the page loads and scrolls to the end with no console errors or failed requests', async ({ page }) => {
     const problems: string[] = [];
     page.on('console', (msg) => {
         if (msg.type() === 'error') problems.push(`console: ${msg.text()}`);
@@ -12,7 +12,15 @@ test('the page loads with no console errors or failed requests', async ({ page }
     });
 
     await page.goto('./', { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    // Scroll down a viewport at a time, so the hero choreography and the observers all run.
+    const { height, total } = await page.evaluate(() => ({
+        height: window.innerHeight,
+        total: document.documentElement.scrollHeight,
+    }));
+    for (let y = height; y < total + height; y += height) {
+        await page.evaluate((top) => window.scrollTo(0, top), y);
+        await page.waitForTimeout(60);
+    }
     await page.waitForLoadState('networkidle');
 
     expect(problems).toEqual([]);
