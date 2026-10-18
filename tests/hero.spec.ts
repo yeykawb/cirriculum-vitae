@@ -52,7 +52,8 @@ test('the hero offers the PDF resume and the link resolves under the base path',
 
 test('the hero artwork loads', async ({ page }) => {
     await page.waitForLoadState('networkidle');
-    const images = await page.locator('img').evaluateAll((imgs) =>
+    // The hero only: Motifs further down load lazily, as the visitor scrolls.
+    const images = await page.getByRole('banner').locator('img').evaluateAll((imgs) =>
         (imgs as HTMLImageElement[]).map((img) => ({ src: img.src, loaded: img.naturalWidth > 0 })),
     );
     expect(images.length).toBeGreaterThan(0);

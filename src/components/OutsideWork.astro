@@ -1,10 +1,12 @@
 ---
 import Section from './Section.astro';
 import Entry from './Entry.astro';
+import Motif from './Motif.astro';
 import { cv } from '../data/cv';
 ---
 
 <Section id="outside-work" label="Outside work">
+    <Motif name="geese" />
     <div class="interests">
         {
             cv.outsideWork.interests.map((interest) => (

@@ -1,6 +1,8 @@
 :root {
     /* Washi paper, ink and greys. Vermilion is reserved for the sun and the Hanko. */
     --washi: #f1ece3;
+    /* Day arc: the Washi cools a few percent by the foot of the page. */
+    --washi-cool: #e9ebea;
     --ink: #1f1d1a;
     --ink-soft: #3d3a35;
     --grey: #66625b;
@@ -24,13 +26,20 @@ html {
 
 body {
     margin: 0;
-    background: var(--washi);
+    /* Day arc: plain Washi through the hero (its veil is opaque Washi) and the start of About,
+       then a slow cooling by page position. */
+    background: linear-gradient(to bottom, var(--washi) 300svh, var(--washi-cool));
     color: var(--ink-soft);
     font-family: var(--font-sans);
     font-weight: 300;
     font-size: 1rem;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Motifs bleed past the column; clip them at the page edge so nothing scrolls sideways. */
+main {
+    overflow-x: clip;
 }
 
 a {
