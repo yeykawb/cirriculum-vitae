@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 // The sections after the hero, in page order. Later tickets append their section here:
 // Skills, Certifications, Education, Outside work, Closing.
-const sectionsAfterHero = ['About', 'Experience'];
+const sectionsAfterHero = ['About', 'Experience', 'Skills', 'Certifications', 'Education'];
 
 test.beforeEach(async ({ page }) => {
     await page.goto('./');

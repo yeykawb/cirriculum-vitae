@@ -1,0 +1,58 @@
+---
+import Section from './Section.astro';
+import { cv } from '../data/cv';
+---
+
+<Section id="certifications" label="Certifications">
+    {
+        cv.certifications.map((group) => (
+            <div class="cert-group">
+                <h3 class="cert-group-name">{group.name}</h3>
+                <ul class="certs">
+                    {group.certifications.map((cert) => (
+                        <li class="cert">
+                            <span class="cert-name">{cert.name}</span>
+                            <span class="cert-meta">
+                                {cert.issuer}, {cert.date}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</Section>
+
+<style>
+    .cert-group + .cert-group {
+        margin-top: 2.5rem;
+    }
+
+    .cert-group-name {
+        margin: 0 0 0.9rem;
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: var(--grey);
+    }
+
+    .certs {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .cert + .cert {
+        margin-top: 0.9rem;
+    }
+
+    .cert-name {
+        display: block;
+    }
+
+    .cert-meta {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--grey);
+    }
+</style>
