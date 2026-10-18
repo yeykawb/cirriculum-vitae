@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** claimed
+**Status:** resolved
 
 - [x] `redesign` branch created from `main`; `main` untouched
 - [x] nvm installed and Node 24 LTS active (machine currently has Node 12)
@@ -14,7 +14,7 @@
 - [x] Hero shows name, *Data Platform Engineer*, the PDF summary, and email/phone/LinkedIn/GitHub links on washi with serif + sans fonts
 - [x] Playwright runs against the built site; tests cover Title text, contact link targets, and zero console errors
 - [x] GitHub Actions workflow: install → type-check → build → Playwright → deploy to Pages via the official Astro action (only takes effect once Pages source is switched at merge)
-- [ ] `CLAUDE.md` rewritten for the new stack and conventions — done by the `docs-writer` agent after the code lands, not by the implementer
+- [x] `CLAUDE.md` rewritten for the new stack and conventions — done by the `docs-writer` agent after the code lands, not by the implementer
 
 ## Answer
 
@@ -30,3 +30,4 @@ Built by the orchestrator (Opus) in-session on `redesign`.
 - **Removed:** `index.html`, `assets/` (CSS, all JS, `export/cv-link.txt`).
 - Dev toolbar is disabled in `astro.config.mjs` to keep screenshots clean.
 
+- `CLAUDE.md` rewritten by the docs-writer agent (ed808d8).
