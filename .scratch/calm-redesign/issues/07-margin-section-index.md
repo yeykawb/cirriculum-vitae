@@ -4,7 +4,7 @@
 
 **Blocked by:** 04, 05, 06
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] Index lists About, Experience, Skills, Certifications, Education, Outside work, Closing (labels may be shortened)
 - [ ] Current section highlighted as the visitor scrolls
