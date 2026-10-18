@@ -4,7 +4,7 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] Ensō extracted from the PDF's embedded raster layers and rendered around the name
 - [ ] 3–4 Ridges, sun and three birds as separate SVG layers (so ticket 03 can move each independently); 2–3 Ridges on mobile
