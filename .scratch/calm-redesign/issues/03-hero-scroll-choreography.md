@@ -4,7 +4,7 @@
 
 **Blocked by:** 02
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] Scroll progress through the pinned hero drives all layer movement; nothing moves while idle (except optional very slow mist drift)
 - [ ] Back Ridges move slower than front; front Ridge covers the intro by the end of the pin
