@@ -1,7 +1,8 @@
 ---
 import { cv, contactLinks } from '../data/cv';
 
-const [email, phone, linkedin, github] = contactLinks(cv.contact);
+const { email, phone, linkedin, github } = contactLinks(cv.contact);
+// Two lines, as on the PDF.
 const lines = [
     [email, phone],
     [linkedin, github],

@@ -43,12 +43,19 @@ function shortUrl(url: string): string {
     return url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 }
 
-/** Contact details as links, in the PDF's order: email, phone, LinkedIn, GitHub. */
-export function contactLinks(contact: Contact): ContactLink[] {
-    return [
-        { label: contact.email, href: `mailto:${contact.email}` },
-        { label: contact.phone, href: `tel:${contact.phone.replace(/\s/g, '')}` },
-        { label: shortUrl(contact.linkedin), href: contact.linkedin },
-        { label: shortUrl(contact.github), href: contact.github },
-    ];
+export interface ContactLinks {
+    email: ContactLink;
+    phone: ContactLink;
+    linkedin: ContactLink;
+    github: ContactLink;
+}
+
+/** Contact details as links, labelled as printed on the PDF. */
+export function contactLinks(contact: Contact): ContactLinks {
+    return {
+        email: { label: contact.email, href: `mailto:${contact.email}` },
+        phone: { label: contact.phone, href: `tel:${contact.phone.replace(/\s/g, '')}` },
+        linkedin: { label: shortUrl(contact.linkedin), href: contact.linkedin },
+        github: { label: shortUrl(contact.github), href: contact.github },
+    };
 }
