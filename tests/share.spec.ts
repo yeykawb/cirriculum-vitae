@@ -105,6 +105,8 @@ test('every link can be reached by keyboard and shows a focus outline', async ({
     }
     // The hero's links, the section index, Contact and the project links are all reached.
     expect(seen.size).toBeGreaterThan(10);
+    expect([...seen]).toContain('#about');
+    expect([...seen]).toContain('#contact');
     expect(await page.locator('#contact a[href]').count()).toBeGreaterThan(0);
 });
 
@@ -120,11 +122,13 @@ test.describe('without JavaScript', () => {
             .locator('h1, h2, h3, h4')
             .evaluateAll((els) => els.map((el) => el.textContent!.trim()));
         const certs = await withScripts
-            .locator('#certifications li .cert-name')
-            .evaluateAll((els) => els.map((el) => el.textContent!.trim()));
+            .locator('#certifications')
+            .getByRole('listitem')
+            .allInnerTexts();
         const links = await withScripts
             .locator('#contact address a')
             .evaluateAll((els) => els.map((el) => el.textContent!.trim()));
+        const withScriptsText = await withScripts.getByRole('main').innerText();
         await withScripts.close();
         expect(headings.length).toBeGreaterThan(10);
         expect(certs.length).toBeGreaterThan(0);
@@ -138,8 +142,16 @@ test.describe('without JavaScript', () => {
                 page.getByRole('heading', { name: text, exact: true }).first(),
             ).toBeVisible();
         }
-        for (const text of certs) {
-            await expect(page.getByText(text, { exact: true }).first()).toBeVisible();
+        // Every paragraph and list item in every section, not just the headings.
+        const main = page.getByRole('main');
+        await expect(main).toHaveText(withScriptsText, { useInnerText: true });
+        for (const block of await main.locator('p, li').all()) {
+            await expect(block).toBeVisible();
+        }
+        const certItems = page.locator('#certifications').getByRole('listitem');
+        await expect(certItems).toHaveText(certs, { useInnerText: true });
+        for (const item of await certItems.all()) {
+            await expect(item).toBeVisible();
         }
         for (const text of links) {
             await expect(
