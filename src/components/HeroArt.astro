@@ -1,0 +1,156 @@
+---
+// The hero's hand-built scene: Ridges, sun and birds, drawn in the Ensō's own
+// coordinate space (a 1000 x 1000 box that matches the Ensō image square) so
+// they sit in the lower part of the circle exactly as on the PDF resume.
+//
+// Every layer is its own <svg> so each can be transformed independently
+// (ticket 03): [data-hero-layer="ridge-1" … "ridge-4" | "sun" | "birds"].
+// Stacking order (z-index, back to front): ridge-1, sun, ridge-2, ridge-3,
+// ridge-4, birds. The sun sits partly behind ridge-2. On phones ridge-1 is dropped.
+
+// Ridges are listed back (faintest) to front (strongest wash).
+const ridges = [
+    {
+        layer: 'ridge-1',
+        x0: 262,
+        x1: 505,
+        z: 1,
+        opacity: 0.3,
+        d: 'M262 770 C280 752 300 744 320 748 C334 751 346 758 360 750 C374 738 388 730 404 730 C424 729 438 735 454 736 C466 738 478 748 490 764 L505 790 L262 790 Z',
+    },
+    {
+        layer: 'ridge-2',
+        x0: 486,
+        x1: 772,
+        z: 3,
+        opacity: 0.5,
+        d: 'M486 772 C506 760 524 752 544 754 C560 748 574 745 590 750 C610 744 630 740 646 746 C668 742 688 747 706 750 C722 738 738 726 756 716 L772 716 L772 800 L486 800 Z',
+    },
+    {
+        layer: 'ridge-3',
+        x0: 376,
+        x1: 666,
+        z: 4,
+        opacity: 0.58,
+        d: 'M376 802 C400 800 424 800 442 794 C458 783 480 772 500 767 C516 762 532 760 548 766 C564 771 580 774 600 773 C624 772 644 775 666 779 C654 794 642 806 626 814 L376 822 Z',
+    },
+    {
+        layer: 'ridge-4',
+        x0: 296,
+        x1: 770,
+        z: 5,
+        opacity: 0.26,
+        d: 'M296 826 C348 812 404 814 450 822 C500 830 560 832 620 824 C676 817 722 818 770 828 L770 872 L296 872 Z',
+    },
+];
+
+// Three birds, upper left of the sun. Each bird is a <g> holding its wing
+// poses as sibling paths, so later tickets can add an "up" and a "down" pose
+// next to the "rest" pose and switch between them. Only "rest" is drawn now.
+const birds = [
+    { id: 'bird-1', x: 424, y: 712, scale: 1.3 },
+    { id: 'bird-2', x: 473, y: 696, scale: 1.05 },
+    { id: 'bird-3', x: 512, y: 709, scale: 0.85 },
+];
+const restPose =
+    'M-15 -3.4 C-9.5 -1.6 -4.4 0.8 0 4.2 C4.4 0.8 9.5 -1.6 15 -3.4 C9.6 -3.4 4.2 -1.6 0 1 C-4.2 -1.6 -9.6 -3.4 -15 -3.4 Z';
+---
+
+<div class="hero-art" aria-hidden="true">
+    {
+        ridges.map((ridge) => (
+            <svg
+                class="art-layer"
+                data-hero-layer={ridge.layer}
+                style={`z-index: ${ridge.z}`}
+                viewBox="0 0 1000 1000"
+                focusable="false"
+            >
+                <defs>
+                    <linearGradient id={`${ridge.layer}-wash`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#7c868d" stop-opacity={ridge.opacity} />
+                        <stop offset="0.5" stop-color="#8a9399" stop-opacity={ridge.opacity * 0.42} />
+                        <stop offset="1" stop-color="#8a9399" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient
+                        id={`${ridge.layer}-edge`}
+                        gradientUnits="userSpaceOnUse"
+                        x1={ridge.x0}
+                        x2={ridge.x1}
+                        y1="0"
+                        y2="0"
+                    >
+                        <stop offset="0" stop-color="#000" />
+                        <stop offset="0.24" stop-color="#fff" />
+                        <stop offset="0.76" stop-color="#fff" />
+                        <stop offset="1" stop-color="#000" />
+                    </linearGradient>
+                    <mask id={`${ridge.layer}-fade`} maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000">
+                        <rect width="1000" height="1000" fill={`url(#${ridge.layer}-edge)`} />
+                    </mask>
+                    <filter id={`${ridge.layer}-soft`} x="-5%" y="-10%" width="110%" height="125%">
+                        <feGaussianBlur stdDeviation="1.6" />
+                    </filter>
+                </defs>
+                <g mask={`url(#${ridge.layer}-fade)`}>
+                    <path d={ridge.d} fill={`url(#${ridge.layer}-wash)`} filter={`url(#${ridge.layer}-soft)`} />
+                </g>
+            </svg>
+        ))
+    }
+
+    <svg class="art-layer" data-hero-layer="sun" style="z-index: 2" viewBox="0 0 1000 1000" focusable="false">
+        <defs>
+            <radialGradient id="sun-wash" cx="0.42" cy="0.4" r="0.7">
+                <stop offset="0" style="stop-color: var(--vermilion)" stop-opacity="0.8" />
+                <stop offset="1" style="stop-color: var(--vermilion)" stop-opacity="0.62" />
+            </radialGradient>
+            <filter id="sun-soft" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="0.5" />
+            </filter>
+        </defs>
+        <circle cx="597" cy="738" r="17" fill="url(#sun-wash)" filter="url(#sun-soft)" />
+    </svg>
+
+    <svg class="art-layer" data-hero-layer="birds" style="z-index: 6" viewBox="0 0 1000 1000" focusable="false">
+        {
+            birds.map((bird) => (
+                <g
+                    class="bird"
+                    data-bird={bird.id}
+                    transform={`translate(${bird.x} ${bird.y}) scale(${bird.scale})`}
+                >
+                    <path class="bird-pose" data-pose="rest" d={restPose} />
+                </g>
+            ))
+        }
+    </svg>
+</div>
+
+<style>
+    /* The stage is square, so the art fills it. */
+    .hero-art {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .art-layer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .bird-pose {
+        fill: var(--ink);
+    }
+
+    /* Two to three Ridges on phones: the faintest, back one is dropped. */
+    @media (max-width: 40rem) {
+        [data-hero-layer='ridge-1'] {
+            display: none;
+        }
+    }
+</style>
