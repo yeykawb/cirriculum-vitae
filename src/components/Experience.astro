@@ -13,7 +13,9 @@ import { cv, hasAssignments } from '../data/cv';
                         <div class="work">
                             <h4 class="work-title">{assignment.client}</h4>
                             <p class="work-text">{assignment.description}</p>
-                            <p class="work-tech">{assignment.tech.join(' · ')}</p>
+                            {assignment.tech && (
+                                <p class="work-tech">{assignment.tech.join(' · ')}</p>
+                            )}
                         </div>
                     ))
                 ) : (

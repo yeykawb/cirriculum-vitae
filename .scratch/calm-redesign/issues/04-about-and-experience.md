@@ -23,12 +23,12 @@
 - `tests/sections.spec.ts`: append new section labels to `sectionsAfterHero`. The anchor id is the lowercased, hyphenated label, so "Outside work" must use id `outside-work`.
 
 **Deviations / judgement calls**
-- Volvo Cars has no technologies, so its grey line holds the legacy tags ("Tech lead · Global rollout · Stakeholder management") to keep the rhythm. Say if you'd rather omit it.
+- An Assignment's tech line is optional in the data module; Volvo Cars has none (no technologies worth listing).
 - Hero is still a `<header>` with no id; I wrapped the new sections in `<main>` in `index.astro` (small merge surface with ticket 02). The margin index (07) will need an anchor for the hero.
 - The branch was created from the legacy commit, so I fast-forwarded it to `redesign` before starting.
 - Tests ran on PW_PORT=4351 because another worktree was already listening on 4341.
 
 **Needs a human eye**
-- Portrait: a faint grey vignette halo remains where the dark photo background fades into the washi; judge whether it reads as ink wash or as a smudge.
+- Portrait: multiplied into the washi with lifted blacks and a tight elliptical mask, so it reads as a pale ink wash; judge whether the face is too faint.
 - Date alignment against the serif Employer title in the left margin.
 - The gap between the 100svh hero and About is just the hero's own height; tickets 02/03 will change it.

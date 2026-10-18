@@ -33,13 +33,15 @@ import { cv } from '../data/cv';
         line-height: 1.75;
     }
 
-    /* Black and white, zoomed to the face, the dark backdrop dissolving into the washi. */
+    /* A quiet ink-wash portrait: black and white, multiplied into the washi, with the dark
+       studio backdrop dissolving close to the head instead of forming a ring. */
     .about-portrait {
         width: 8rem;
         height: 8rem;
         overflow: hidden;
-        -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
-        mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+        mix-blend-mode: multiply;
+        -webkit-mask-image: radial-gradient(ellipse 36% 42% at 50% 48%, #000 35%, transparent 100%);
+        mask-image: radial-gradient(ellipse 36% 42% at 50% 48%, #000 35%, transparent 100%);
     }
 
     .about-portrait :global(img) {
@@ -47,10 +49,9 @@ import { cv } from '../data/cv';
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transform: scale(1.35);
-        transform-origin: 50% 30%;
-        filter: grayscale(1);
-        opacity: 0.9;
+        transform: scale(1.15);
+        transform-origin: 50% 45%;
+        filter: grayscale(1) contrast(0.55) brightness(1.4);
     }
 
     @media (min-width: 36rem) {

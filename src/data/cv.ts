@@ -14,8 +14,8 @@ export interface Contact {
 export interface Assignment {
     client: string;
     description: string;
-    /** Technologies, shown as one quiet line. */
-    tech: string[];
+    /** Technologies, shown as one quiet line. Omit when there are none worth listing. */
+    tech?: string[];
 }
 
 interface EmployerBase {
@@ -154,7 +154,6 @@ export const cv: CV = {
                         'Led the global rollout of Configure Your Volvo across 30 markets and ' +
                         "owned its roadmap. Configured the legacy backend systems to each market's " +
                         'requirements, working from sparse documentation.',
-                    tech: ['Tech lead', 'Global rollout', 'Stakeholder management'],
                 },
             ],
         },
