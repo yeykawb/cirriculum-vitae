@@ -1,0 +1,82 @@
+---
+import { cv, contactLinks } from '../data/cv';
+
+const [email, phone, linkedin, github] = contactLinks(cv.contact);
+const lines = [
+    [email, phone],
+    [linkedin, github],
+];
+---
+
+<header class="hero">
+    <div class="hero-intro">
+        <h1 class="hero-name">{cv.name}</h1>
+        <p class="hero-title">{cv.title}</p>
+        <p class="hero-summary">{cv.summary}</p>
+        <address class="hero-contact">
+            {
+                lines.map((line) => (
+                    <p>
+                        {line.map((link, i) => (
+                            <>
+                                {i > 0 && <span aria-hidden="true"> · </span>}
+                                <a href={link.href}>{link.label}</a>
+                            </>
+                        ))}
+                    </p>
+                ))
+            }
+        </address>
+    </div>
+</header>
+
+<style>
+    .hero {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 4rem 1.5rem;
+        text-align: center;
+    }
+
+    .hero-intro {
+        max-width: var(--column);
+    }
+
+    .hero-name {
+        font-family: var(--font-serif);
+        font-weight: 300;
+        font-size: clamp(2.6rem, 9vw, 4.4rem);
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        color: var(--ink);
+        margin: 0;
+    }
+
+    .hero-title {
+        margin: 0.9rem 0 0;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--grey);
+    }
+
+    .hero-summary {
+        margin: 2.5rem auto 0;
+        max-width: 30rem;
+        line-height: 1.7;
+    }
+
+    .hero-contact {
+        margin-top: 2rem;
+        font-style: normal;
+        font-size: 0.8rem;
+        line-height: 1.8;
+        color: var(--grey);
+    }
+
+    .hero-contact p {
+        margin: 0;
+    }
+</style>
