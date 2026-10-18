@@ -36,11 +36,12 @@ const ridges = [
     },
     {
         layer: 'ridge-4',
-        x0: 296,
-        x1: 770,
+        x0: 236,
+        x1: 830,
         z: 5,
-        opacity: 0.26,
-        d: 'M296 826 C348 812 404 814 450 822 C500 830 560 832 620 824 C676 817 722 818 770 828 L770 872 L296 872 Z',
+        // Drawn strong; Hero.astro holds the layer pale at rest and brings it up as it rises.
+        opacity: 0.7,
+        d: 'M236 842 C262 832 276 829 296 826 C348 812 404 814 450 822 C500 830 560 832 620 824 C676 817 722 818 770 828 C792 832 812 838 830 846 L830 920 L236 920 Z',
     },
 ];
 
@@ -54,6 +55,10 @@ const birds = [
 ];
 const restPose =
     'M-15 -3.4 C-9.5 -1.6 -4.4 0.8 0 4.2 C4.4 0.8 9.5 -1.6 15 -3.4 C9.6 -3.4 4.2 -1.6 0 1 C-4.2 -1.6 -9.6 -3.4 -15 -3.4 Z';
+const upPose =
+    'M-15 -10 C-10 -7 -4.6 -2 0 3.4 C4.6 -2 10 -7 15 -10 C9.8 -8 4.4 -3.4 0 0.2 C-4.4 -3.4 -9.8 -8 -15 -10 Z';
+const downPose =
+    'M-14 6 C-9 1 -4.4 -3 0 -4 C4.4 -3 9 1 14 6 C9.4 2.8 4.2 -0.4 0 -0.6 C-4.2 -0.4 -9.4 2.8 -14 6 Z';
 ---
 
 <div class="hero-art" aria-hidden="true">
@@ -99,18 +104,20 @@ const restPose =
         ))
     }
 
-    <svg class="art-layer" data-hero-layer="sun" style="z-index: 2" viewBox="0 0 1000 1000" focusable="false">
-        <defs>
-            <radialGradient id="sun-wash" cx="0.42" cy="0.4" r="0.7">
-                <stop offset="0" style="stop-color: var(--vermilion)" stop-opacity="0.8" />
-                <stop offset="1" style="stop-color: var(--vermilion)" stop-opacity="0.62" />
-            </radialGradient>
-            <filter id="sun-soft" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="0.5" />
-            </filter>
-        </defs>
-        <circle cx="597" cy="738" r="17" fill="url(#sun-wash)" filter="url(#sun-soft)" />
-    </svg>
+    <div class="art-layer" data-hero-layer="sun" style="z-index: 2">
+        <svg class="sun-disc" viewBox="0 0 1000 1000" focusable="false">
+            <defs>
+                <radialGradient id="sun-wash" cx="0.42" cy="0.4" r="0.7">
+                    <stop offset="0" style="stop-color: var(--vermilion)" stop-opacity="0.8" />
+                    <stop offset="1" style="stop-color: var(--vermilion)" stop-opacity="0.62" />
+                </radialGradient>
+                <filter id="sun-soft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="0.5" />
+                </filter>
+            </defs>
+            <circle cx="597" cy="738" r="17" fill="url(#sun-wash)" filter="url(#sun-soft)" />
+        </svg>
+    </div>
 
     <svg class="art-layer" data-hero-layer="birds" style="z-index: 6" viewBox="0 0 1000 1000" focusable="false">
         {
@@ -121,6 +128,8 @@ const restPose =
                     transform={`translate(${bird.x} ${bird.y}) scale(${bird.scale})`}
                 >
                     <path class="bird-pose" data-pose="rest" d={restPose} />
+                    <path class="bird-pose" data-pose="up" d={upPose} />
+                    <path class="bird-pose" data-pose="down" d={downPose} />
                 </g>
             ))
         }
@@ -145,6 +154,38 @@ const restPose =
 
     .bird-pose {
         fill: var(--ink);
+    }
+
+    /* Wing poses (ticket 03). At rest, and without the script, only "rest" shows. */
+    [data-pose='up'],
+    [data-pose='down'] {
+        display: none;
+    }
+
+    :global(.hero[data-flap='1']) [data-pose='rest'],
+    :global(.hero[data-flap='3']) [data-pose='rest'] {
+        display: none;
+    }
+
+    :global(.hero[data-flap='1']) [data-pose='up'],
+    :global(.hero[data-flap='3']) [data-pose='down'] {
+        display: inline;
+    }
+
+    /* The sun layer is a masked window onto the Ridge-2 horizon. It moves with
+       Ridge 2 (see Hero.astro); the disc sinks inside it and is hidden by the
+       soft mask, so it goes behind the mountain instead of fading in mid-air. */
+    [data-hero-layer='sun'] {
+        -webkit-mask-image: linear-gradient(to bottom, #000 75.6%, transparent 77.4%);
+        mask-image: linear-gradient(to bottom, #000 75.6%, transparent 77.4%);
+    }
+
+    .sun-disc {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
     }
 
     /* Two to three Ridges on phones: the faintest, back one is dropped. */

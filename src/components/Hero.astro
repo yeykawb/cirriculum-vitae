@@ -16,52 +16,113 @@ const lines = [
 ---
 
 <header class="hero">
-    <div class="hero-stage">
-        <Image
-            class="hero-enso"
-            src={enso}
-            alt=""
-            aria-hidden="true"
-            widths={[640, 960, 1280, 1600]}
-            sizes="(max-width: 40rem) 140vw, min(124vw, 106svh)"
-            format="webp"
-            loading="eager"
-            fetchpriority="high"
-        />
-        <HeroArt />
-        <div class="hero-intro">
-            <h1 class="hero-name">
-                {cv.name}
-                <img class="hero-hanko" src={hanko.src} alt="" aria-hidden="true" width="32" height="32" />
-            </h1>
-            <p class="hero-title">{cv.title}</p>
-            <p class="hero-summary">{cv.summary}</p>
-            <address class="hero-contact">
-                {
-                    lines.map((line) => (
-                        <p>
-                            {line.map((link, i) => (
-                                <>
-                                    {i > 0 && <span aria-hidden="true"> · </span>}
-                                    <a href={link.href}>{link.label}</a>
-                                </>
-                            ))}
-                        </p>
-                    ))
-                }
-            </address>
+    <div class="hero-pin">
+        <div class="hero-stage">
+            <Image
+                class="hero-enso"
+                src={enso}
+                alt=""
+                aria-hidden="true"
+                widths={[640, 960, 1280, 1600]}
+                sizes="(max-width: 40rem) 140vw, min(124vw, 106svh)"
+                format="webp"
+                loading="eager"
+                fetchpriority="high"
+            />
+            <HeroArt />
+            <div class="hero-veil" aria-hidden="true"></div>
+            <div class="hero-intro">
+                <h1 class="hero-name">
+                    {cv.name}
+                    <img class="hero-hanko" src={hanko.src} alt="" aria-hidden="true" width="32" height="32" />
+                </h1>
+                <p class="hero-title">{cv.title}</p>
+                <p class="hero-summary">{cv.summary}</p>
+                <address class="hero-contact">
+                    {
+                        lines.map((line) => (
+                            <p>
+                                {line.map((link, i) => (
+                                    <>
+                                        {i > 0 && <span aria-hidden="true"> · </span>}
+                                        <a href={link.href}>{link.label}</a>
+                                    </>
+                                ))}
+                            </p>
+                        ))
+                    }
+                </address>
+            </div>
         </div>
     </div>
 </header>
 
+<script is:inline>
+    // Scroll-driven hero. Maps the scroll through the tall hero to a progress
+    // from 0 to 1 and writes it as --hero-progress; CSS turns it into movement.
+    // Runs only on scroll and resize. With reduced motion it does nothing, and
+    // the hero stays the static composition. Without JS the same happens.
+    (function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var hero = document.querySelector('.hero');
+        var pin = hero && hero.querySelector('.hero-pin');
+        if (!pin) return;
+        document.documentElement.classList.add('hero-motion');
+
+        var frame = 0;
+        var flap = -1;
+        function update() {
+            frame = 0;
+            var range = hero.offsetHeight - pin.offsetHeight;
+            var p = range > 0 ? -hero.getBoundingClientRect().top / range : 0;
+            p = Math.min(1, Math.max(0, p));
+            hero.style.setProperty('--hero-progress', p.toFixed(4));
+            // Wing poses: rest, up, rest, down, then round again.
+            var next = Math.floor(p / 0.07) % 4;
+            if (next !== flap) {
+                flap = next;
+                hero.dataset.flap = String(next);
+            }
+        }
+        function schedule() {
+            if (!frame) frame = requestAnimationFrame(update);
+        }
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        update();
+    })();
+</script>
+
 <style>
+    /* Progress through the pin, 0 to 1. The script overrides it on scroll. */
     .hero {
         position: relative;
+        --hero-progress: 0;
+    }
+
+    /* The pin is one screen. Without the script, or with reduced motion, the
+       hero is just this: the static composition. */
+    .hero-pin {
+        position: sticky;
+        top: 0;
         height: 100svh;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: clip;
+    }
+
+    /* With the script the hero is tall and the pin holds for about one and a
+       half screens (one on phones), then lets go. */
+    :global(html.hero-motion) .hero {
+        height: 250svh;
+    }
+
+    /* About follows directly on the washi the front Ridge left behind. */
+    :global(html.hero-motion) .hero ~ :global(main) {
+        position: relative;
+        z-index: 1;
+        margin-top: -50svh;
     }
 
     /* The stage is the Ensō image square. The PDF leaves a tenth of padding
@@ -90,7 +151,8 @@ const lines = [
         transform: translate(-50%, -52%);
         width: max(46cqi, 18rem);
         text-align: center;
-        z-index: 7;
+        /* Above Ridge 3, below the front Ridge, so the front Ridge covers it. */
+        z-index: 4;
     }
 
     .hero-name {
@@ -141,12 +203,110 @@ const lines = [
         margin: 0;
     }
 
+    /* The veil is plain washi, misty at its top edge, that rises behind the
+       front Ridge until it fills the screen. It is the paper About sits on. */
+    .hero-veil {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        pointer-events: none;
+    }
+
+    .hero-veil::before {
+        content: '';
+        position: absolute;
+        left: -200vw;
+        right: -200vw;
+        top: 150%;
+        height: 400%;
+        background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--washi) 0%, transparent) 0,
+            color-mix(in srgb, var(--washi) 55%, transparent) 4%,
+            var(--washi) 9%
+        );
+    }
+
+    /* Choreography. Every rule is a pure function of --hero-progress, so
+       scrolling back up reverses it. Only transform and opacity change. A
+       layer's travel is a share of the stage height; back Ridges move least. */
+    :global(html.hero-motion) .hero {
+        --ridge-1-travel: 12%;
+        --ridge-2-travel: 30%;
+        --ridge-3-travel: 55%;
+        --ridge-4-travel: 110%;
+        --veil-travel: 210%;
+        --sun-sink: 10%;
+        --bird-run-x: 95%;
+        --bird-run-y: 95%;
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer]),
+    :global(html.hero-motion) .hero-stage :global(.sun-disc),
+    :global(html.hero-motion) .hero-veil {
+        will-change: transform;
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='ridge-1']) {
+        transform: translateY(calc(var(--hero-progress) * var(--ridge-1-travel) * -1));
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='ridge-2']),
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='sun']) {
+        transform: translateY(calc(var(--hero-progress) * var(--ridge-2-travel) * -1));
+    }
+
+    :global(html.hero-motion) .hero-stage :global(.sun-disc) {
+        transform: translateY(calc(var(--hero-progress) * var(--sun-sink)));
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='ridge-3']) {
+        transform: translateY(calc(var(--hero-progress) * var(--ridge-3-travel) * -1));
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='ridge-4']) {
+        transform: translateY(calc(var(--hero-progress) * var(--ridge-4-travel) * -1));
+    }
+
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='birds']) {
+        transform: translate(
+            calc(var(--hero-progress) * var(--bird-run-x)),
+            calc(var(--hero-progress) * var(--bird-run-y) * -1)
+        );
+    }
+
+    /* Pale at rest, as on the PDF; solid grey by a third of the way through. */
+    :global(html.hero-motion) .hero-stage :global([data-hero-layer='ridge-4']) {
+        opacity: calc(0.4 + var(--hero-progress) * 2);
+    }
+
+    :global(html.hero-motion) .hero-veil {
+        transform: translateY(calc(var(--hero-progress) * var(--veil-travel) * -1));
+    }
+
+    :global(html.hero-motion) .hero-stage :global(.hero-enso) {
+        opacity: calc(1 - var(--hero-progress) * 0.55);
+    }
+
+    :global(html.hero-motion) .hero-intro {
+        opacity: calc(1 - var(--hero-progress) * 0.5);
+    }
+
     /* On a phone the stage is wider than the screen so the inner circle can
        hold the text. The left and right strokes bleed off the edges and the
-       hero clips them. The Ensō stays square. */
+       hero clips them. The Ensō stays square. The pin is shorter. */
     @media (max-width: 40rem) {
         .hero-stage {
             width: 140vw;
+        }
+
+        :global(html.hero-motion) .hero {
+            height: 200svh;
+            --veil-travel: 250%;
+        }
+
+        :global(html.hero-motion) .hero ~ :global(main) {
+            margin-top: -40svh;
         }
 
         .hero-stage :global(.hero-art) {
