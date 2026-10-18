@@ -4,7 +4,7 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] CV data module extended with About and Employers → Assignments
 - [ ] Employers: Consid 2023–present (Ambea, Bostadsförmedlingen i Stockholm), Capgemini 2022–2023 (Hedin Bil), Visiba Care 2021–2022 (Data Platform Owner role), Capgemini 2018–2021 (Volvo Cars — Configure Your Volvo only)
