@@ -10,20 +10,24 @@ export interface Contact {
     location: string;
 }
 
-/** A client engagement carried out while at a consulting Employer. */
-export interface Assignment {
-    client: string;
+/** What Jakob did: an Assignment, or the single role at an in-house Employer. */
+export interface Work {
     description: string;
     /** Technologies, shown as one quiet line. Omit when there are none worth listing. */
     tech?: string[];
+}
+
+/** A client engagement carried out while at a consulting Employer. */
+export interface Assignment extends Work {
+    client: string;
 }
 
 interface EmployerBase {
     name: string;
     /** As displayed, e.g. "2023 – present". */
     period: string;
-    /** Jakob's job title at the Employer. */
-    title: string;
+    /** Jakob's job title at the Employer (not to be confused with his Title). */
+    position: string;
 }
 
 /** A consulting Employer: Jakob's work there is a list of Assignments. */
@@ -33,10 +37,7 @@ export interface ConsultingEmployer extends EmployerBase {
 
 /** A non-consulting Employer: Jakob's work there is a single role, no Assignments. */
 export interface InHouseEmployer extends EmployerBase {
-    role: {
-        description: string;
-        tech: string[];
-    };
+    role: Work;
 }
 
 export type Employer = ConsultingEmployer | InHouseEmployer;
@@ -54,6 +55,8 @@ export interface CV {
     summary: string;
     contact: Contact;
     about: string;
+    /** Alt text for the About portrait. */
+    portraitAlt: string;
     /** Newest first. */
     employers: Employer[];
     resume: Resume;
@@ -75,15 +78,16 @@ export const cv: CV = {
     },
     about:
         'I learn best in conversation, talking a problem through or listening to someone who ' +
-        "knows more than I do, and at Consid I've run knowledge-sharing sessions on my own time " +
-        'because of it. I care about work being understood, not just delivered. ' +
+        "knows more than I do; at Consid I've organised knowledge-sharing sessions on my own " +
+        'time because I enjoy it. I care about work being understood, not just delivered. ' +
         "I'm curious where the field is going, DuckDB and cheap single-machine compute " +
         'especially, and whether they will change how we think about distributed analytics.',
+    portraitAlt: 'Black-and-white portrait of Jakob Agelin, looking straight at the camera',
     employers: [
         {
             name: 'Consid',
             period: '2023 – present',
-            title: 'Data Engineer',
+            position: 'Data Engineer',
             assignments: [
                 {
                     client: 'Ambea',
@@ -119,7 +123,7 @@ export const cv: CV = {
         {
             name: 'Capgemini',
             period: '2022 – 2023',
-            title: 'Data Engineer',
+            position: 'Data Engineer',
             assignments: [
                 {
                     client: 'Hedin Bil',
@@ -134,7 +138,7 @@ export const cv: CV = {
         {
             name: 'Visiba Care',
             period: '2021 – 2022',
-            title: 'Data Platform Owner',
+            position: 'Data Platform Owner',
             role: {
                 description:
                     'One-person data team at a healthcare startup. Built and owned the platform ' +
@@ -154,12 +158,12 @@ export const cv: CV = {
         {
             name: 'Capgemini',
             period: '2018 – 2021',
-            title: 'Tech Lead / Consultant',
+            position: 'Tech Lead / Consultant',
             assignments: [
                 {
                     client: 'Volvo Cars',
                     description:
-                        'Led the global rollout of Configure Your Volvo across 30 markets and ' +
+                        'Led the global rollout of Configure Your Volvo across 30+ markets and ' +
                         "owned its roadmap. Configured the legacy backend systems to each market's " +
                         'requirements, working from sparse documentation.',
                 },

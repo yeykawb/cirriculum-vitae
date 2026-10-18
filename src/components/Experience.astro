@@ -2,28 +2,25 @@
 import Section from './Section.astro';
 import Entry from './Entry.astro';
 import { cv, hasAssignments } from '../data/cv';
+import type { Assignment, Employer, Work } from '../data/cv';
+
+/** An Employer's Assignments, or its single role as one untitled piece of work. */
+function workOf(employer: Employer): (Work & Partial<Pick<Assignment, 'client'>>)[] {
+    return hasAssignments(employer) ? employer.assignments : [employer.role];
+}
 ---
 
 <Section id="experience" label="Experience">
     {
         cv.employers.map((employer) => (
-            <Entry dates={employer.period} title={employer.name} meta={employer.title}>
-                {hasAssignments(employer) ? (
-                    employer.assignments.map((assignment) => (
-                        <div class="work">
-                            <h4 class="work-title">{assignment.client}</h4>
-                            <p class="work-text">{assignment.description}</p>
-                            {assignment.tech && (
-                                <p class="work-tech">{assignment.tech.join(' · ')}</p>
-                            )}
-                        </div>
-                    ))
-                ) : (
+            <Entry dates={employer.period} title={employer.name} meta={employer.position}>
+                {workOf(employer).map((work) => (
                     <div class="work">
-                        <p class="work-text">{employer.role.description}</p>
-                        <p class="work-tech">{employer.role.tech.join(' · ')}</p>
+                        {work.client && <h4 class="work-title">{work.client}</h4>}
+                        <p class="work-text">{work.description}</p>
+                        {work.tech && <p class="work-tech">{work.tech.join(' · ')}</p>}
                     </div>
-                )}
+                ))}
             </Entry>
         ))
     }
