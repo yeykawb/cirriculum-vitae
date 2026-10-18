@@ -4,7 +4,7 @@
 
 **Blocked by:** 04, 05, 06
 
-**Status:** ready-for-agent
+**Status:** claimed
 
 - [ ] Source images fetched from Cleveland open access, cropped once (mounts, borders, stray seals removed) and committed; accession numbers recorded in repo docs
 - [ ] Delivered through Astro's image pipeline at web sizes, lazy-loaded
