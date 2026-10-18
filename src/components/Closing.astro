@@ -1,0 +1,50 @@
+---
+import Section from './Section.astro';
+import { cv, closing, contactLinks, resumeLink } from '../data/cv';
+
+const { email, phone, linkedin, github } = contactLinks(cv.contact);
+const resume = resumeLink(cv.resume, import.meta.env.BASE_URL);
+// Same three lines as the hero.
+const lines = [[email, phone], [linkedin, github], [resume]];
+---
+
+<Section id="contact" label="Contact">
+    <p class="closing-line">{closing.line}</p>
+    <address class="closing-links">
+        {
+            lines.map((line) => (
+                <p>
+                    {line.map((link, i) => (
+                        <>
+                            {i > 0 && <span aria-hidden="true"> · </span>}
+                            <a href={link.href}>{link.label}</a>
+                        </>
+                    ))}
+                </p>
+            ))
+        }
+    </address>
+</Section>
+
+<style>
+    .closing-line {
+        margin: 0;
+    }
+
+    .closing-links {
+        margin-top: 1.5rem;
+        font-style: normal;
+        font-size: 0.9rem;
+        line-height: 1.9;
+        color: var(--grey);
+    }
+
+    .closing-links p {
+        margin: 0;
+    }
+
+    /* Room below for the landscape motif that will sit under the page. */
+    :global(#contact) {
+        padding-bottom: 10rem;
+    }
+</style>
