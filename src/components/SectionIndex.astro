@@ -1,0 +1,146 @@
+---
+// The margin section index: a tiny fixed list of section names in the right margin of wide
+// screens. Others in grey, the current one in ink. Hidden over the hero and on phones, and
+// without JavaScript. The labels match the section ids on the page (a test guards this).
+const items = [
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'certifications', label: 'Certifications' },
+    { id: 'education', label: 'Education' },
+    { id: 'outside-work', label: 'Outside work' },
+    { id: 'contact', label: 'Contact' },
+];
+---
+
+<nav class="section-index" aria-label="Sections">
+    <ul>
+        {
+            items.map((item) => (
+                <li>
+                    <a href={`#${item.id}`}>{item.label}</a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<script>
+    // A section counts as reached once it enters the top half of the viewport, and stays
+    // reached once it has scrolled past. The current section is the last one reached; the
+    // index appears when the first one is. No scroll listeners.
+    const nav = document.querySelector<HTMLElement>('.section-index');
+    if (nav) {
+        const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a'));
+        const reached = new Map<string, boolean>();
+        let seenEnd = false;
+
+        const update = () => {
+            let current: HTMLAnchorElement | undefined;
+            for (const link of links) {
+                const id = link.hash.slice(1);
+                if (reached.get(id) || (seenEnd && link === links[links.length - 1])) current = link;
+            }
+            nav.classList.toggle('is-shown', current !== undefined);
+            for (const link of links) {
+                if (link === current) link.setAttribute('aria-current', 'location');
+                else link.removeAttribute('aria-current');
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    reached.set(
+                        entry.target.id,
+                        entry.isIntersecting || entry.boundingClientRect.top < 0,
+                    );
+                }
+                update();
+            },
+            { rootMargin: '0px 0px -50% 0px' },
+        );
+        for (const link of links) {
+            const section = document.getElementById(link.hash.slice(1));
+            if (section) observer.observe(section);
+        }
+
+        // The last section is short, so at the end of the page it may never reach the top
+        // half. Seeing all of it counts as reaching it.
+        const last = document.getElementById(links[links.length - 1].hash.slice(1));
+        if (last) {
+            new IntersectionObserver(
+                ([entry]) => {
+                    seenEnd = entry.intersectionRatio >= 0.99;
+                    update();
+                },
+                { threshold: [0, 0.99] },
+            ).observe(last);
+        }
+    }
+</script>
+
+<style>
+    .section-index {
+        display: none;
+    }
+
+    @media (min-width: 64rem) {
+        .section-index {
+            display: block;
+            position: fixed;
+            top: 50%;
+            right: 2.5rem;
+            transform: translateY(-50%);
+            z-index: 1;
+            text-align: right;
+            /* Hidden over the hero, and without JavaScript. Not focusable while hidden. */
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                opacity 0.6s ease,
+                visibility 0s linear 0.6s;
+        }
+
+        .section-index:global(.is-shown) {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease;
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        margin: 0;
+        line-height: 2.2;
+    }
+
+    a {
+        font-family: var(--font-sans);
+        font-size: 0.66rem;
+        font-weight: 400;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--grey);
+        border-bottom: 0;
+        transition: color 0.4s ease;
+    }
+
+    a:hover,
+    a[aria-current] {
+        color: var(--ink);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .section-index,
+        .section-index:global(.is-shown),
+        a {
+            transition: none;
+        }
+    }
+</style>
